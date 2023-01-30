@@ -1,0 +1,31 @@
+{
+  "name": "dbox",
+  "version": "1.0.0",
+  "description": "Open source project dealing with transferring files to the cloud with a simple click",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack --config webpack/webpack.config.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kpattaswamy/DBox.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kpattaswamy/DBox/issues"
+  },
+  "homepage": "https://github.com/kpattaswamy/DBox#readme",
+  "devDependencies": {
+    "@types/chrome": "^0.0.210",
+    "@types/react": "^18.0.27",
+    "@types/react-dom": "^18.0.10",
+    "copy-webpack-plugin": "^11.0.0",
+    "ts-loader": "^9.4.2",
+    "typescript": "^4.9.4",
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.1"
+  }
+}
