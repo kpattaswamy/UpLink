@@ -6,13 +6,20 @@
        "jsx": "react",
        "types": [
          "react",
-         "react-dom"
+         "react-dom",
+         "chrome"
        ],
        "esModuleInterop": true,
        "sourceMap": true,
        "rootDir": "src",
-       "outDir": "dist/js",
+       //"outDir": "dist/js",
        "noEmitOnError": true,
-       "typeRoots": [ "node_modules/@types" ]
-    }
+       //"typeRoots": [ "node_modules/@types" ]
+    },
+    "include": [
+      "./src"
+    ],
+    "exclude": [
+      "node_modules",
+    ]
  }
