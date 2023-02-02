@@ -1,4 +1,3 @@
 import React from "react";
 
-
-console.log("welcome to uplink from console")
+console.log("welcome to uplink from console");
