@@ -7,7 +7,8 @@
        "types": [
          "react",
          "react-dom",
-         "chrome"
+         "chrome",
+         "aws-sdk"
        ],
        "esModuleInterop": true,
        "sourceMap": true,
