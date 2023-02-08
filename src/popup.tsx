@@ -1,7 +1,8 @@
 import React, {FormEvent} from 'react';
 import {render} from 'react-dom';
-import AWS_cloud from './aws_authentication';
-  
+// import AWS_cloud from './aws_authentication';
+import { AuthAWS } from './aws_auth';
+
 interface CustomElements extends HTMLFormControlsCollection {
   username: HTMLInputElement;
   password: HTMLInputElement;
@@ -26,7 +27,9 @@ export const Popup = () => {
       };
 
       // console.log(data);
-      cloud_server : AWS_cloud = new AWS_cloud()
+      const authenAWS = new AuthAWS(data.email, data.password)
+      authenAWS.print_parameter()
+      authenAWS.sdk_configure()
       
   };
 

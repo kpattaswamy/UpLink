@@ -8,7 +8,8 @@
          "react",
          "react-dom",
          "chrome",
-         "aws-sdk"
+         "aws-sdk",
+         "node"
        ],
        "esModuleInterop": true,
        "sourceMap": true,

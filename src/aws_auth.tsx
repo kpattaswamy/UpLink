@@ -6,18 +6,23 @@ import * as AWS from 'aws-sdk';
 export class AuthAWS {
 	username: string
 	password: string
-  objectAWS: AWS
+  configurator: AWS.Config
+  // objectAWS: AWS
 
 	constructor (_user: string, _pass: string){
 		this.username = _user
 		this.password = _pass
+    this.configurator = new AWS.Config()
 	}
 
-  sdk_configure () {
-    this.objectAWS = new AWS.config.update({
-      region: 'us-east-1',
+  print_parameter () {
+    console.log(this.username, this.password)
+  }
 
-    })
+  sdk_configure () {
+    this.configurator.update({region: 'us-east-1'})
+    
+    this.configurator.update({accessKeyId: this.username, secretAccessKey: this.password})
   }
 }
 
