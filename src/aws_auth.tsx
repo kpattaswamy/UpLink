@@ -3,10 +3,16 @@ import {render} from 'react-dom';
 
 import * as AWS from 'aws-sdk';
 
+import { PutObjectCommand } from "@aws-sdk/client-s3";
+import { s3Client } from "./libs/s3Client.js"; // Helper function that creates an Amazon S3 service client module.
+import {path} from "path";
+import {fs} from "fs";
+
 export class AuthAWS {
 	username: string
 	password: string
   configurator: AWS.Config
+  configued: boolean = false
   // objectAWS: AWS
 
 	constructor (_user: string, _pass: string){
@@ -20,9 +26,20 @@ export class AuthAWS {
   }
 
   sdk_configure () {
-    this.configurator.update({region: 'us-east-1'})
+    this.configurator.update({region: 'us-east-2'})
     
     this.configurator.update({accessKeyId: this.username, secretAccessKey: this.password})
+    this.configued = true
+  }
+
+  doSomething () {
+    if (!this.configued) {
+      console.log("call configure function first")
+      return
+    }
+
+    const file_path = "test.txt"
+    const fileStream = fs.createReadStream(file_path)
   }
 }
 
