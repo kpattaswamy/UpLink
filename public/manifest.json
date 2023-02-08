@@ -3,10 +3,12 @@
   "description": "Send files to the cloud with a single click!",
   "version": "1.0",
   "manifest_version": 3,
+  "permissions": ["contextMenus"],
   "action": {    
     "default_popup": "index.html"
   },
   "background": {
-		"service_worker": "background.js"
+		"service_worker": "background.js",
+    "scripts": ["right_click.js"]
   }
 }
