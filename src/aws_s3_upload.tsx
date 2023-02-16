@@ -21,6 +21,7 @@ export class S3Upload {
     try {
       await this.myS3.headBucket({Bucket: this.whichBucket}).promise()
       console.log("Successful")
+      this.validUser = true
       return true
     } catch (err) {
       console.log(err)
