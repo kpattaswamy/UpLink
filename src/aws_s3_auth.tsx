@@ -1,15 +1,18 @@
-import React, {FormEvent, PureComponent, useState} from 'react';
-//import {App} from './app';
+import React, {FormEvent} from 'react';
 
+// Stores the S3 keys from user input
 interface AWS3Keys extends HTMLFormControlsCollection {
   accessKey: HTMLInputElement;
   secretAccessKey: HTMLInputElement;
 }
 
+// Make the param for onSubmit of type readonly 
 interface AWSAuthForm extends HTMLFormElement {
   readonly elements: AWS3Keys;
 }
-type Props = {onViewChange? :(s:string)=>void};
+
+// Type prop meant to be called with the identifier of the new state (UI) for App to render
+type Props = {onViewChange? : (v : string)=>void};
 
 export class GetS3Keys extends React.Component<Props>{
 
@@ -29,9 +32,12 @@ export class GetS3Keys extends React.Component<Props>{
           accessKey: target.accessKey.value,
           secretAccessKey: target.secretAccessKey.value,
       };
-      
+
+      // Following line should execute if a successful connection was made with S3, else change state to alert user of invalid keys
+      // Change the UI to configure buckets after successful auth
       this.props.onViewChange!('config-bucket');
 
+      // Print keys for temporarty verification
       console.log(awsS3Keys);
   };
   
@@ -55,11 +61,5 @@ export class GetS3Keys extends React.Component<Props>{
             <button type="submit">Configure</button>
         </form>
     );
-
-    
-
-
-
   }
 };
-
