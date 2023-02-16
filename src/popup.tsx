@@ -1,45 +1,44 @@
 import React, {FormEvent} from 'react';
 import {render} from 'react-dom';
   
-interface CustomElements extends HTMLFormControlsCollection {
-  username: HTMLInputElement;
-  password: HTMLInputElement;
+interface AWS3Keys extends HTMLFormControlsCollection {
+  accessKey: HTMLInputElement;
+  secretAccessKey: HTMLInputElement;
 }
 
-interface CustomForm extends HTMLFormElement {
-  readonly elements: CustomElements;
+interface AWSAuthForm extends HTMLFormElement {
+  readonly elements: AWS3Keys;
 }
 
-
-export const Popup = () => {
-  const onSubmit = (event: FormEvent<CustomForm>) => {
-      console.log(event);
-
+export const AWSS3Auth = () => {
+  const onSubmit = (event: FormEvent<AWSAuthForm>) => {
+      //Prevent Default so that the event can be recorded in console
       event.preventDefault();
 
       const target = event.currentTarget.elements;
 
-      const data = {
-          email: target.username.value,
-          password: target.password.value,
+      //User's keys for AWS S3
+      const awsS3Keys = {
+          accessKey: target.accessKey.value,
+          secretAccessKey: target.secretAccessKey.value,
       };
 
-      console.log(data);
+      console.log(awsS3Keys);
   };
 
   return (
       <form className="form" onSubmit={onSubmit}>
           <div className="field">
-              <label htmlFor="username">AWS User Name</label>
-              <input type="email" id="username" />
+              <label htmlFor="accessKey">AWS S3 Access key</label>
+              <input type="text" id="accessKey" />
           </div>
           <div className="field">
-              <label htmlFor="password">Password</label>
-              <input type="password" id="password" />
+              <label htmlFor="secretAccessKey">AWS S3 Secret Access Key</label>
+              <input type="text" id="secretAccessKey" />
           </div>
-          <button type="submit">Login</button>
+          <button type="submit">Configure</button>
       </form>
   );
 };
 
-render(<Popup />, document.getElementById("popup"));
+render(<AWSS3Auth/>, document.getElementById("awsS3Auth"));
