@@ -5,5 +5,5 @@ chrome.contextMenus.create({
    });
 
 function savePDF(): void{
-    return
+    console.log("Right Click Option Selected")
 }
