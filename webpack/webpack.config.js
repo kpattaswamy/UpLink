@@ -7,7 +7,7 @@ module.exports = {
    mode: "production",
    entry: {
       background: path.resolve(__dirname, "..", "src", "background.ts"),
-      popup:  path.resolve(__dirname, "..", "src", "popup.tsx"),
+      popup:  path.resolve(__dirname, "..", "src", "aws_s3_auth.tsx"),
    },
    output: {
       path: resolve(__dirname, "../dist"),
