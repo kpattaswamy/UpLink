@@ -18,7 +18,31 @@ export class S3Upload {
       accessKeyId: publicKey,
       secretAccessKey: privateKey,
     })
+
+    // write code to check if the keys are valid
   }
+
+  // Write a function to check if the keys are valid or not
+  // checkIfS3KeysValid() : boolean {
+  //   // check if this.myS3 has valid
+  //   this.myS3.che
+  // }
+
+
+  // checkIfKeysValid () : boolean {
+  //   // check if this.myS3 has valid 
+
+  //   let returnFlag = true
+
+  //   this.myS3.listBuckets(function(err, data) {
+  //     if (err) {
+  //       console.log("Key error:\n" + err)
+  //       returnFlag = false
+  //     }
+  //   })
+
+  //   return returnFlag
+  // }
 
   setFileParametersS3(bucket: string, fileName: string, fileContent: string) {
     this.whichBucket = bucket
