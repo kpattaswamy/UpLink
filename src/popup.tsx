@@ -1,7 +1,8 @@
 import React, {FormEvent} from 'react';
 import {render} from 'react-dom';
+import { S3Upload } from './aws_s3_upload';
 // import AWS_cloud from './aws_authentication';
-import { AuthAWS } from './aws_auth';
+// import { AuthAWS } from './aws_auth';
 
 interface CustomElements extends HTMLFormControlsCollection {
   username: HTMLInputElement;
@@ -27,9 +28,21 @@ export const Popup = () => {
       };
 
       // console.log(data);
-      const authenAWS = new AuthAWS(data.email, data.password)
-      authenAWS.print_parameter()
-      authenAWS.sdk_configure()
+      let s3Uploader = new S3Upload("asdf", "123", "testingseniordesign")
+      let res = s3Uploader.checkValidUser().then((res) => {
+        if (res) {
+          console.log("success")
+          return true
+        } else {
+          console.log("failure")
+          return false
+        }}
+      )
+      console.log("1 " + res)
+      
+      let s3Uploader2 = new S3Upload("", "", "testingseniordesign")
+      let res2 = s3Uploader2.checkValidUser()
+      console.log("2 " + res2)
       
   };
 
