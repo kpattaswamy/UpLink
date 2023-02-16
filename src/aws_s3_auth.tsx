@@ -10,7 +10,7 @@ interface AWSAuthForm extends HTMLFormElement {
   readonly elements: AWS3Keys;
 }
 
-export const AWSS3Auth = () => {
+export const GetS3Keys = () => {
   const onSubmit = (event: FormEvent<AWSAuthForm>) => {
       //Prevent Default so that the event can be recorded in console
       event.preventDefault();
@@ -41,4 +41,4 @@ export const AWSS3Auth = () => {
   );
 };
 
-render(<AWSS3Auth/>, document.getElementById("awsS3Auth"));
+render(<GetS3Keys/>, document.getElementById("awsS3Auth"));
