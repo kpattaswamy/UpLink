@@ -1,4 +1,4 @@
-name: Create UpLink Build Artifact
+name: Upload UpLink Artifact
 
 on:
   push:
