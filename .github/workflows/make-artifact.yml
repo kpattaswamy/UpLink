@@ -1,0 +1,31 @@
+name: Create UpLink Build Artifact
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  archive-build-artifacts:
+    runs-on: ubuntu-latest
+        strategy:
+      matrix:
+        node-version: [16.x]
+    steps:
+      - name: Create temporary artifact downloads folder
+        run: mkdir downloads 
+      - name: Add artifacts to publish to the temp folder
+        - uses: actions/checkout@v3
+        - name: Use Node.js ${{ matrix.node-version }}
+          uses: actions/setup-node@v3
+          with:
+            node-version: ${{ matrix.node-version }}
+        - run: npm ci
+        - run: npm run build --if-present
+    
+      - name: Use the Upload Artifact GitHub Action
+        uses: actions/upload-artifact@v3
+        with: 
+          name: assets-for-download
+          path: downloads
