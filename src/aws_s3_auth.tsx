@@ -1,9 +1,13 @@
 import React, {FormEvent} from 'react';
+import {render} from 'react-dom';
+import { MyS3Auth } from './aws_s3_auth_conn';
+  
 
 // Stores the S3 keys from user input
 interface AWS3Keys extends HTMLFormControlsCollection {
   accessKey: HTMLInputElement;
   secretAccessKey: HTMLInputElement;
+  bucketName: HTMLInputElement;
 }
 
 // Make the param for onSubmit of type readonly 
@@ -31,14 +35,16 @@ export class GetS3Keys extends React.Component<Props>{
       const awsS3Keys = {
           accessKey: target.accessKey.value,
           secretAccessKey: target.secretAccessKey.value,
+          bucketName: target.bucketName.value
       };
+
+      const s3Auth = new MyS3Auth(awsS3Keys.accessKey, awsS3Keys.secretAccessKey, awsS3Keys.bucketName);
+      // This doesn't work complete, it only prints success or failure to console
+      const isValidUser = s3Auth.checkValidUser();
 
       // Following line should execute if a successful connection was made with S3, else change state to alert user of invalid keys
       // Change the UI to configure buckets after successful auth
       this.props.onViewChange!('config-bucket');
-
-      // Print keys for temporarty verification
-      console.log(awsS3Keys);
   };
   
   render () {
@@ -56,6 +62,13 @@ export class GetS3Keys extends React.Component<Props>{
                 <input 
                   type="text" 
                   id="secretAccessKey"
+                />
+            </div>
+            <div className="field">
+                <label htmlFor="bucketName">AWS S3 Bucket Name</label>
+                <input
+                  type="text"
+                  id="bucketName"
                 />
             </div>
             <button type="submit">Configure</button>
