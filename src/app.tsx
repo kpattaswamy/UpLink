@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {render} from 'react-dom';
 import {GetS3Keys} from './aws_s3_auth';
+import {ConfigureBucket} from './s3_config_bucket';
 
 
 // Type Props specifies a function that will change the state of App
@@ -9,6 +10,14 @@ type Props = {onViewChange? : (s:string)=>void};
 // Type ViewState specifies the state (auth, bucket configuration, file upload display, etc)
 type ViewState = {
     view: string;
+}
+
+type accessKey = {
+    key: string;
+}
+
+type secretAccessKey = {
+    key: string;
 }
 
 // Driver for the UI
@@ -40,7 +49,10 @@ export class App extends React.Component<Props, ViewState>{
             
             {this.state.view === 'config-bucket' 
             && 
-            <div>Successfully changed state to bucket configuration</div>}
+            <ConfigureBucket
+                onViewChange={this.handler}
+            
+            />}
         </div>
         )
     }

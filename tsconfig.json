@@ -10,6 +10,7 @@
          "chrome",
          "aws-sdk",
          "node"
+         "react-select"
        ],
        "esModuleInterop": true,
        "sourceMap": true,
