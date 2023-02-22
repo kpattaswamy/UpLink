@@ -1,4 +1,32 @@
 import { S3 } from "aws-sdk"
+// import { S3 } from "@aws-sdk/client-s3"
+import { S3Client, HeadBucketCommand } from "@aws-sdk/client-s3"; // ES Modules import
+
+
+export class MyS3Auth2 {
+  s3Client:     S3Client
+  validUser:    boolean
+
+  whichBucket:  string
+
+  constructor (publicKey : string, privateKey : string, _bucketName : string = "", _region : string = "Global") {
+    if (publicKey.length === 0 || privateKey.length === 0) {
+      throw new Error("Public and private keys cannot be empty")
+    }
+    
+    this.s3Client = new S3Client({
+      credentials: {
+        accessKeyId: publicKey,
+        secretAccessKey: privateKey,
+      },
+      region: _region,
+    })
+
+    this.whichBucket = _bucketName
+    this.validUser = false
+  }
+
+}
 
 export class MyS3Auth {
   s3:           S3
@@ -40,7 +68,7 @@ export class MyS3Auth {
 
   async checkValidUser() : Promise<boolean> {
     try {
-      const res = await this.s3.headBucket({Bucket: this.whichBucket}).promise()
+      // const res = await this.s3.headBucket({Bucket: this.whichBucket}).promise()
       console.log("Successful")
       this.validUser = true
       return true
