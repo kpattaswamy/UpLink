@@ -40,7 +40,12 @@ export class GetS3Keys extends React.Component<Props>{
 
       const s3Auth = new MyS3Auth(awsS3Keys.accessKey, awsS3Keys.secretAccessKey, awsS3Keys.bucketName);
       // This doesn't work complete, it only prints success or failure to console
-      const isValidUser = s3Auth.checkValidUser();
+      const isValidUser = s3Auth.checkValidUserJanke();
+      console.log(isValidUser);
+
+      const badAuth = new MyS3Auth("bad", "bad", "bad");
+      const notValidUser = badAuth.checkValidUserJanke();
+      console.log(notValidUser)
 
       // Following line should execute if a successful connection was made with S3, else change state to alert user of invalid keys
       // Change the UI to configure buckets after successful auth
