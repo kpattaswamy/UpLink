@@ -38,6 +38,25 @@ export class MyS3Auth {
     this.validUser = false
   }
 
+  checkValidUserJanke() : boolean {
+    var returnValue : boolean = false
+    var doneFlag = 0
+    this.s3.headBucket({Bucket: this.whichBucket}, function(err, data) {
+      if (err) {
+        console.log(err)
+        doneFlag += 1
+      } else {
+        returnValue = true
+        doneFlag += 1
+      }
+    })
+
+    while (doneFlag === 0) {
+      console.log(doneFlag)
+    }
+    return returnValue
+  }
+
   async checkValidUser() : Promise<boolean> {
     try {
       const res = await this.s3.headBucket({Bucket: this.whichBucket}).promise()
