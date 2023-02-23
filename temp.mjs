@@ -8,9 +8,28 @@ var client = new S3Client({
     region: "us-east-1",
 });
 
-const command = new HeadBucketCommand({ Bucket: "arc" });
+const command = new HeadBucketCommand({ Bucket: "" });
 
 var resVal = null;
+
+// client.send(command).then(
+//     (data) => {
+//         console.log(data);
+//         resVal = true;
+//     }).catch(
+//     (err) => {
+//         console.error(err);
+//         resVal = false;
+//     }).finally(() => {
+//         console.log("Done", resVal);
+// });
+
+// // console.log("after", resVal);    
+// while (resVal == null) {
+//     console.log("waiting");
+// }
+
+// console.log("after", resVal);
 
 try {
     const data = await client.send(command);
@@ -22,3 +41,5 @@ try {
 } finally {
     console.log("Done", resVal);
 }
+
+console.log("after", resVal);
