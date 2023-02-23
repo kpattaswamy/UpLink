@@ -1,6 +1,4 @@
-// import { S3 } from "@aws-sdk/client-s3"
 import { S3Client, HeadBucketCommand } from "@aws-sdk/client-s3"; // ES Modules import
-
 
 export class MyS3Auth {
   s3Client:     S3Client
@@ -9,11 +7,12 @@ export class MyS3Auth {
   whichBucket:  string
   region:       string
 
-  constructor (publicKey : string, privateKey : string, _region : string = "Global") {
+  constructor (publicKey : string, privateKey : string, _region : string = "us-east-1") {
     if (publicKey.length === 0 || privateKey.length === 0) {
       throw new Error("Public and private keys cannot be empty")
     }
     
+    // Default region is us-east-1 (N. Virginia), needed for S3Client
     this.region = _region
 
     this.s3Client = new S3Client({
@@ -50,17 +49,26 @@ export class MyS3Auth {
     this.validUser = false
   }
 
-  checkValidUser() : boolean{
+  changeRegion(region : string) {
+    if (region.length === 0) {
+      throw new Error("Region cannot be empty")
+    }
+    this.region = region
+    this.validUser = false
+  }
+
+  checkValidUser() {
     try {
-      const command = new HeadBucketCommand({ Bucket: this.whichBucket })
-      const data = this.s3Client.send(command)
-      console.log("Success", data)
-      this.validUser = true
+      const headBucketCommand = new HeadBucketCommand({
+        Bucket: this.whichBucket,
+      })
+      this.s3Client.send(headBucketCommand)
     } catch (err) {
       this.validUser = false
       console.log("Error", err)
     } finally {
-      return this.validUser
+      this.validUser = true
+      console.log("Finished checking user")
     }
   }
 }
