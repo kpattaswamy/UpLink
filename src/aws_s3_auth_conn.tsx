@@ -1,59 +1,43 @@
-import { S3 } from "aws-sdk"
 // import { S3 } from "@aws-sdk/client-s3"
 import { S3Client, HeadBucketCommand } from "@aws-sdk/client-s3"; // ES Modules import
 
 
-export class MyS3Auth2 {
+export class MyS3Auth {
   s3Client:     S3Client
   validUser:    boolean
 
   whichBucket:  string
+  region:       string
 
-  constructor (publicKey : string, privateKey : string, _bucketName : string = "", _region : string = "Global") {
+  constructor (publicKey : string, privateKey : string, _region : string = "Global") {
     if (publicKey.length === 0 || privateKey.length === 0) {
       throw new Error("Public and private keys cannot be empty")
     }
     
+    this.region = _region
+
     this.s3Client = new S3Client({
       credentials: {
         accessKeyId: publicKey,
         secretAccessKey: privateKey,
       },
-      region: _region,
+      region: this.region,
     })
 
-    this.whichBucket = _bucketName
+    this.whichBucket = ""
     this.validUser = false
-  }
-
-}
-
-export class MyS3Auth {
-  s3:           S3
-  validUser:    boolean
-
-  // File parameters
-  whichBucket:  string
-
-  constructor (publicKey : string, privateKey : string, bucketName : string) {
-    if (publicKey.length === 0 || privateKey.length === 0 || bucketName.length === 0) {
-      throw new Error("Public, private keys, and bucket name cannot be empty")
-    }
-    this.whichBucket = bucketName
-    this.validUser = false
-    this.s3 = new S3({
-      accessKeyId: publicKey,
-      secretAccessKey: privateKey,
-    })
   }
 
   changeUser(publicKey : string, privateKey : string) {
     if (publicKey.length === 0 || privateKey.length === 0) {
       throw new Error("Public and private keys cannot be empty")
     }
-    this.s3 = new S3({
-      accessKeyId: publicKey,
-      secretAccessKey: privateKey,
+    this.s3Client = new S3Client({
+      credentials: {
+        accessKeyId: publicKey,
+        secretAccessKey: privateKey,
+      },
+      region: this.region,
     })
     this.validUser = false
   }
@@ -66,15 +50,17 @@ export class MyS3Auth {
     this.validUser = false
   }
 
-  async checkValidUser() : Promise<boolean> {
+  checkValidUser() : boolean{
     try {
-      // const res = await this.s3.headBucket({Bucket: this.whichBucket}).promise()
-      console.log("Successful")
+      const command = new HeadBucketCommand({ Bucket: this.whichBucket })
+      const data = this.s3Client.send(command)
+      console.log("Success", data)
       this.validUser = true
-      return true
     } catch (err) {
-      console.log(err)
-      return false
+      this.validUser = false
+      console.log("Error", err)
+    } finally {
+      return this.validUser
     }
   }
 }
