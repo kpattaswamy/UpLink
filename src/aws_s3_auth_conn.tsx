@@ -1,11 +1,14 @@
 import { S3Client, HeadBucketCommand } from "@aws-sdk/client-s3"; // ES Modules import
 
 export class MyS3Auth {
+  // S3Client object
   s3Client:     S3Client
   validUser:    boolean
 
+  // S3Client parameters
   whichBucket:  string
   region:       string
+
 
   constructor (publicKey : string, privateKey : string, _region : string = "us-east-1") {
     if (publicKey.length === 0 || privateKey.length === 0) {
@@ -27,6 +30,8 @@ export class MyS3Auth {
     this.validUser = false
   }
 
+
+  // Change the user's keys
   changeUser(publicKey : string, privateKey : string) {
     if (publicKey.length === 0 || privateKey.length === 0) {
       throw new Error("Public and private keys cannot be empty")
@@ -41,6 +46,8 @@ export class MyS3Auth {
     this.validUser = false
   }
 
+
+  // Change the bucket name
   changeBucket(bucketName : string) {
     if (bucketName.length === 0) {
       throw new Error("Bucket name cannot be empty")
@@ -49,25 +56,19 @@ export class MyS3Auth {
     this.validUser = false
   }
 
-  changeRegion(region : string) {
-    if (region.length === 0) {
-      throw new Error("Region cannot be empty")
-    }
-    this.region = region
-    this.validUser = false
-  }
 
+  // Check if the user's keys are valid for specified bucket
   checkValidUser() {
     try {
       const headBucketCommand = new HeadBucketCommand({
         Bucket: this.whichBucket,
       })
       this.s3Client.send(headBucketCommand)
+      this.validUser = true
     } catch (err) {
       this.validUser = false
       console.log("Error", err)
     } finally {
-      this.validUser = true
       console.log("Finished checking user")
     }
   }
