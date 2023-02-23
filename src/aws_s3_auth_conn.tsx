@@ -1,4 +1,4 @@
-import { S3 } from "aws-sdk"
+import { Request, S3 } from "aws-sdk"
 
 export class MyS3Auth {
   s3:           S3
@@ -67,5 +67,33 @@ export class MyS3Auth {
       console.log(err)
       return false
     }
+  }
+
+
+  private getS3Data() : Promise<any> {
+    return new Promise((resolve, reject) => {
+      const res = this.s3.headBucket({Bucket: this.whichBucket}, function(err, data) {
+        if (err) {
+          console.log(err)
+          reject(err)
+        } else {
+          console.log("Successful")
+          resolve(data)
+        }
+      })
+    })
+  }
+
+  checkValidUserPro() : boolean {
+    this.getS3Data().then((res) => {
+      console.log("Successful" + res)
+      this.validUser = true
+      return true
+    }).catch((err) => {
+      console.log(err)
+      this.validUser = false
+      return false
+    })
+    return false
   }
 }
