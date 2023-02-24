@@ -8,8 +8,8 @@
          "react",
          "react-dom",
          "chrome",
-         "aws-sdk",
-         "node"
+         "@aws-sdk/client-s3",
+         "node",
          "react-select"
        ],
        "esModuleInterop": true,
