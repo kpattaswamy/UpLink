@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import {render} from 'react-dom';
 import {GetS3Keys} from './aws_s3_auth';
-import {ConfigureBucket} from './s3_config_bucket';
 
 
 // Type Props specifies a function that will change the state of App
@@ -49,10 +48,7 @@ export class App extends React.Component<Props, ViewState>{
             
             {this.state.view === 'config-bucket' 
             && 
-            <ConfigureBucket
-                onViewChange={this.handler}
-            
-            />}
+            <div> Configure the bucket</div>}
         </div>
         )
     }
