@@ -58,18 +58,14 @@ export class MyS3Auth {
 
 
   // Check if the user's keys are valid for specified bucket
-  checkValidUser() {
-    try {
-      const headBucketCommand = new HeadBucketCommand({
-        Bucket: this.whichBucket,
-      })
-      this.s3Client.send(headBucketCommand)
-      this.validUser = true
-    } catch (err) {
-      this.validUser = false
-      console.log("Error", err)
-    } finally {
-      console.log("Finished checking user")
-    }
+  // Code after this function call will likely execute before this function finishes
+  checkAndDisplayValidUser(fnSucceed : (args : string) => any, args : string ) {
+    const command = new HeadBucketCommand({ Bucket: this.whichBucket })
+    this.s3Client.send(command).then((data) => {
+      console.log(data)
+      fnSucceed(args)
+    }).catch((err) => {
+      console.log(err)
+    })
   }
 }
