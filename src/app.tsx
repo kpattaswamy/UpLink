@@ -11,6 +11,14 @@ type ViewState = {
     view: string;
 }
 
+type accessKey = {
+    key: string;
+}
+
+type secretAccessKey = {
+    key: string;
+}
+
 // Driver for the UI
 // App will serve as the root node for the "tree" of different UIs. It will always render the "state" that is set by any sub function  
 export class App extends React.Component<Props, ViewState>{
@@ -40,7 +48,7 @@ export class App extends React.Component<Props, ViewState>{
             
             {this.state.view === 'config-bucket' 
             && 
-            <div>Successfully changed state to bucket configuration</div>}
+            <div> Configure the bucket</div>}
         </div>
         )
     }
