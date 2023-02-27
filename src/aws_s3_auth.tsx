@@ -44,15 +44,13 @@ export class GetS3Keys extends React.Component<Props>{
       s3Auth.changeBucket(awsS3Keys.bucketName);
       s3Auth.getS3Client().send(s3Auth.getHeadBucketCommand()).then((data) => {
           console.log(data);
+
+          // Following line should execute if a successful connection was made with S3, else change state to alert user of invalid keys
+          // Change the UI to configure buckets after successful auth
           this.props.onViewChange!('config-bucket');
       }).catch((err) => {
           console.log(err);
       });
-
-      
-      // Following line should execute if a successful connection was made with S3, else change state to alert user of invalid keys
-      // Change the UI to configure buckets after successful auth
-      // this.props.onViewChange!('config-bucket');
   };
   
   render () {
