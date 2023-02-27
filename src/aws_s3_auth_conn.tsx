@@ -57,18 +57,13 @@ export class MyS3Auth {
   }
 
 
-  // Return headBucket command object with bucket parameter
-  getHeadBucketCommand() : HeadBucketCommand {
-    return new HeadBucketCommand({ Bucket: this.whichBucket })
-  }
-
-
   // Check if the user's keys are valid for specified bucket
   // Code after this function call will likely execute before this function finishes
-  checkAndDisplayValidUser(fn : (args : string) => any, args : string ) {
-    this.s3Client.send(this.getHeadBucketCommand()).then((data) => {
+  checkAndDisplayValidUser(fnSucceed : (args : string) => any, args : string ) {
+    const command = new HeadBucketCommand({ Bucket: this.whichBucket })
+    this.s3Client.send(command).then((data) => {
       console.log(data)
-      fn(args)
+      fnSucceed(args)
     }).catch((err) => {
       console.log(err)
     })
