@@ -2,7 +2,7 @@ import { S3Client, HeadBucketCommand } from "@aws-sdk/client-s3"; // ES Modules 
 
 export class MyS3Auth {
   // S3Client object
-  private s3Client:     S3Client
+  s3Client:     S3Client
   validUser:    boolean
 
   // S3Client parameters
@@ -57,12 +57,6 @@ export class MyS3Auth {
   }
 
 
-  // Access S3Client
-  getS3Client() {
-    return this.s3Client
-  }
-
-
   // Return headBucket command object with bucket parameter
   getHeadBucketCommand() : HeadBucketCommand {
     return new HeadBucketCommand({ Bucket: this.whichBucket })
@@ -70,4 +64,13 @@ export class MyS3Auth {
 
 
   // Check if the user's keys are valid for specified bucket
+  // Code after this function call will likely execute before this function finishes
+  checkAndDisplayValidUser(fn : (args : string) => any, args : string ) {
+    this.s3Client.send(this.getHeadBucketCommand()).then((data) => {
+      console.log(data)
+      fn(args)
+    }).catch((err) => {
+      console.log(err)
+    })
+  }
 }
