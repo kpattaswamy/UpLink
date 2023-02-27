@@ -46,7 +46,6 @@ export class MyS3Auth {
     this.validUser = false
   }
 
-
   // Change the bucket name
   changeBucket(bucketName : string) : boolean {
     if (bucketName.length === 0) {
@@ -58,7 +57,6 @@ export class MyS3Auth {
     // Returning true for unit tests
     return true;
   }
-
 
   // Check if the user's keys are valid for specified bucket
   // Code after this function call will likely execute before this function finishes
@@ -72,8 +70,3 @@ export class MyS3Auth {
     })
   }
 }
-
-// export function sum(a:number, b:number) {
-//   return a + b;
-// }
-//module.exports = sum;
