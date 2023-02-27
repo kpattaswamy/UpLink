@@ -38,14 +38,10 @@ export class GetS3Keys extends React.Component<Props>{
           bucketName: target.bucketName.value
       };
 
-
       // Create a new S3Auth object with the user's keys
       const s3Auth = new MyS3Auth(awsS3Keys.accessKey, awsS3Keys.secretAccessKey);
       s3Auth.changeBucket(awsS3Keys.bucketName);
       s3Auth.checkAndDisplayValidUser(this.props.onViewChange!, 'config-bucket');
-
-
-      console.log("Something happened")
   };
   
   render () {

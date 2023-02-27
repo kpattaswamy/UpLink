@@ -9,7 +9,6 @@ export class MyS3Auth {
   whichBucket:  string
   region:       string
 
-
   constructor (publicKey : string, privateKey : string, _region : string = "us-east-1") {
     if (publicKey.length === 0 || privateKey.length === 0) {
       throw new Error("Public and private keys cannot be empty")
@@ -29,7 +28,6 @@ export class MyS3Auth {
     this.whichBucket = ""
     this.validUser = false
   }
-
 
   // Change the user's keys
   changeUser(publicKey : string, privateKey : string) {
@@ -60,11 +58,11 @@ export class MyS3Auth {
 
   // Check if the user's keys are valid for specified bucket
   // Code after this function call will likely execute before this function finishes
-  checkAndDisplayValidUser(fnSucceed : (args : string) => any, args : string ) {
+  checkAndDisplayValidUser(setViewState : (args : string) => any, args : string ) {
     const command = new HeadBucketCommand({ Bucket: this.whichBucket })
     this.s3Client.send(command).then((data) => {
       console.log(data)
-      fnSucceed(args)
+      setViewState(args)
     }).catch((err) => {
       console.log(err)
     })
