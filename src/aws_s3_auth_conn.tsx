@@ -48,12 +48,15 @@ export class MyS3Auth {
 
 
   // Change the bucket name
-  changeBucket(bucketName : string) {
+  changeBucket(bucketName : string) : boolean {
     if (bucketName.length === 0) {
-      throw new Error("Bucket name cannot be empty")
+      throw new Error("Bucket name cannot be empty");
     }
     this.whichBucket = bucketName
     this.validUser = false
+
+    // Returning true for unit tests
+    return true;
   }
 
 
@@ -73,3 +76,8 @@ export class MyS3Auth {
     }
   }
 }
+
+// export function sum(a:number, b:number) {
+//   return a + b;
+// }
+//module.exports = sum;
