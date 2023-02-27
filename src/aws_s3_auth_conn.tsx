@@ -46,16 +46,17 @@ export class MyS3Auth {
     this.validUser = false
   }
 
-
   // Change the bucket name
-  changeBucket(bucketName : string) {
+  changeBucket(bucketName : string) : boolean {
     if (bucketName.length === 0) {
-      throw new Error("Bucket name cannot be empty")
+      throw new Error("Bucket name cannot be empty");
     }
     this.whichBucket = bucketName
     this.validUser = false
-  }
 
+    // Returning true for unit tests
+    return true;
+  }
 
   // Check if the user's keys are valid for specified bucket
   // Code after this function call will likely execute before this function finishes
