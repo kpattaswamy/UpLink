@@ -57,12 +57,15 @@ export class MyS3Auth {
   }
 
   // Check if the user's keys are valid for specified bucket
+  // Save the S3 object made upon validation
   // Code after this function call will likely execute before this function finishes
-  checkAndDisplayValidUser(setViewState : (args : string) => any, args : string ) {
+  checkAndDisplayValidUser(setViewState : (args : string) => any, args : string, setS3Obj : (s3Obj : MyS3Auth) => any, s3Obj : MyS3Auth ) {
+    
     const command = new HeadBucketCommand({ Bucket: this.whichBucket })
     this.s3Client.send(command).then((data) => {
-      console.log(data)
-      setViewState(args)
+      console.log(data);
+      setS3Obj(s3Obj);
+      setViewState(args);
     }).catch((err) => {
       console.log(err)
     })

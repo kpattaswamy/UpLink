@@ -16,7 +16,10 @@ interface AWSAuthForm extends HTMLFormElement {
 }
 
 // Type prop meant to be called with the identifier of the new state (UI) for App to render
-type Props = {onViewChange? : (v : string)=>void};
+type Props = {
+  onViewChange? : (s:string)=>void,
+  onS3ObjChange? : (o:MyS3Auth)=>void
+};
 
 export class GetS3Keys extends React.Component<Props>{
 
@@ -24,14 +27,14 @@ export class GetS3Keys extends React.Component<Props>{
     super(props);
   }
 
-  //function to connect to s3
+  // Function to connect to s3
   onSubmit = (event: FormEvent<AWSAuthForm>) => {
-      //Prevent Default so that the event can be recorded in console
+      // Prevent Default so that the event can be recorded in console
       event.preventDefault();
 
       const target = event.currentTarget.elements;
       
-      //User's keys for AWS S3
+      // User's keys for AWS S3
       const awsS3Keys = {
           accessKey: target.accessKey.value,
           secretAccessKey: target.secretAccessKey.value,
@@ -41,7 +44,10 @@ export class GetS3Keys extends React.Component<Props>{
       // Create a new S3Auth object with the user's keys
       const s3Auth = new MyS3Auth(awsS3Keys.accessKey, awsS3Keys.secretAccessKey);
       s3Auth.changeBucket(awsS3Keys.bucketName);
-      s3Auth.checkAndDisplayValidUser(this.props.onViewChange!, 'config-bucket');
+
+      // Following function call will validate the user and only after validation will the S3 object be stored in app
+      s3Auth.checkAndDisplayValidUser(this.props.onViewChange!, 'config-bucket', this.props.onS3ObjChange!, s3Auth);
+      
   };
   
   render () {
