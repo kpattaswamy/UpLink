@@ -54,7 +54,7 @@ export class GetS3Keys extends React.Component<Props>{
     return(
         <form className="form" onSubmit={this.onSubmit}>
             <div id="welcomeMessage">
-                <h1>Welcome to Uplink!</h1>
+                <h1>Welcome to UpLink!</h1>
             </div>
             <div className="field">
                 <div id="keyLabels">
