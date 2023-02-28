@@ -53,28 +53,47 @@ export class GetS3Keys extends React.Component<Props>{
   render () {
     return(
         <form className="form" onSubmit={this.onSubmit}>
+            <div id="welcomeMessage">
+                <h1>Welcome to UpLink!</h1>
+            </div>
             <div className="field">
-                <label htmlFor="accessKey">AWS S3 Access key</label>
+                <div id="keyLabels">
+                  <label htmlFor="accessKey">AWS S3 Access Key</label>
+                </div>
+
                 <input 
                   type="text" 
                   id="accessKey" 
                 />
             </div>
             <div className="field">
-                <label htmlFor="secretAccessKey">AWS S3 Secret Access Key</label>
+                <div id="keyLabels">
+                    <label htmlFor="secretAccessKey">AWS S3 Secret Access Key</label>
+                </div>
+
                 <input 
                   type="text" 
                   id="secretAccessKey"
                 />
             </div>
             <div className="field">
-                <label htmlFor="bucketName">AWS S3 Bucket Name</label>
+                <div id="keyLabels">
+                  <label htmlFor="bucketName">AWS S3 Bucket Name</label>
+                </div>
+
                 <input
                   type="text"
                   id="bucketName"
                 />
             </div>
-            <button type="submit">Configure</button>
+            <div id="authSubmit">
+                <button
+                  type="submit" 
+                  value="Authenticate"
+                >
+                Authenticate
+                </button>
+            </div>
         </form>
     );
   }
