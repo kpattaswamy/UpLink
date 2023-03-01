@@ -72,7 +72,7 @@ export class GetS3Keys extends React.Component<Props>{
                 </div>
 
                 <input 
-                  type="text" 
+                  type="password" 
                   id="secretAccessKey"
                 />
             </div>
