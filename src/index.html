@@ -3,10 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Log In Page</title>
 
 </head>
 <body style="width: 300px;">
+    <<h1> Enter AWS Credentials </h1> 
+    <form id="login-form">
+        <input type="text" name="username" id="username" class="login-form-field" placeholder="Enter AWS Username">
+        <input type="password" name="password" id="password" class="login-form-field" placeholder="Enter Password">
+        <input type="submit" value="Login" id="submit">
+    </form>
     <div id="popup"></div>
+    <button onclick="submit()">Log In</button>
 </body>
 </html>
