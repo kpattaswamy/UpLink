@@ -18,10 +18,11 @@ export class MySTSAuth {
   }
 
 
-  checkValidKeys() {
+  checkValidKeys(setViewState : (args : string) => any, args : string, setSTSObj : (s3Obj : MySTSAuth) => any, stsObj : MySTSAuth ) {
     const command = new GetCallerIdentityCommand({});
     this.stsClient.send(command).then((data) => {
-        console.log("Success");
+        setSTSObj(stsObj);
+        setViewState(args);
     }).catch((err) => {
         console.log(err);
     });
