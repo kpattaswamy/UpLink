@@ -30,8 +30,8 @@ export class App extends React.Component<Props, State>{
             s3Obj: {}
         };
 
-        // "Reconstruct" if necessary the App object
-        ViewStateStorage.getViewState(this.changeStatefromStorage)
+        // "Reconstruct" the App object if necessary
+        ViewStateStorage.getViewState(this.changeViewStatefromStorage);
     }
 
     // Function that will be passed as a prop to update the state of the UI
@@ -47,14 +47,16 @@ export class App extends React.Component<Props, State>{
     }
 
     // Changes the state from what is in storage
-    changeStatefromStorage = (s:string) => {
-        if (s === 'auth' || s === 'config-bucket'){
-            this.setViewState(s);
+    changeViewStatefromStorage = (view:string) => {
+        if (view === 'auth' || view === 'config-bucket'){
+            this.setViewState(view);
         } else {
             console.error("Trying to swtich to a UI view state that doesn't exist")
         }
     }
 
+    // Logout function should move into configure bucket and send file classes
+    // Contained in App for now
     logout = () => {
         // Change state back to auth
         this.setViewState('auth');
@@ -75,19 +77,19 @@ export class App extends React.Component<Props, State>{
             
             {this.state.view === 'config-bucket' 
             && 
-            <div> Configure the bucket</div>}
-
-            <div id="logout">
-                <button
-                  type="button" 
-                  value="Logout"
-                  onClick={this.logout}
-                >
-                Logout
-                </button>
-            </div>
+            <div> 
+                Configure the bucket
+                <div id="logout">
+                    <button
+                        type="button" 
+                        value="Logout"
+                        onClick={this.logout}
+                    >
+                        Logout
+                    </button>
+                </div>
+            </div>}
         </div>
-        
         )
     }
 }
