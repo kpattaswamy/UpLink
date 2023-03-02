@@ -92,8 +92,10 @@ export class MyS3Auth {
     this.s3Client.send(command).then((data) => {
       setS3Obj(s3Obj);
       setViewState(args);
+      this.validBucket = true;
     }).catch((err) => {
       console.log(err)
+      this.validBucket = false;
     })
   }
 
@@ -105,8 +107,10 @@ export class MyS3Auth {
     this.stsClient.send(command).then((data) => {
       setS3Obj(s3Obj);
       setViewState(args);
+      this.validUser = true;
     }).catch((err) => {
       console.log(err)
+      this.validUser = false;
     })
   }
 }
