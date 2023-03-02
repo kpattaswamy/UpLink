@@ -12,16 +12,16 @@ export class UserMetaStorage {
         const accessKeyId = user._accessKeyId;
         const secretAccessKey = user._secretAccessKey;
         const region = user.region;
-        chrome.storage.local.set({ [ACCESS_KEY_ID_KEY]: accessKeyId });
-        chrome.storage.local.set({ [SECRET_ACCESS_KEY_KEY]: secretAccessKey });
-        chrome.storage.local.set({ [REGION_KEY]: region });
+        chrome.storage.session.set({ [ACCESS_KEY_ID_KEY]: accessKeyId });
+        chrome.storage.session.set({ [SECRET_ACCESS_KEY_KEY]: secretAccessKey });
+        chrome.storage.session.set({ [REGION_KEY]: region });
     }
     
     static getUserS3Obj(onGetStorageKeyValue:(s1:string, s2:string, s3:string)=>void){
         // This function gets user metadata from chrome's storage
         // The param is a function which sets the state, it acts like call back
 
-        chrome.storage.local.get([
+        chrome.storage.session.get([
             ACCESS_KEY_ID_KEY,
             SECRET_ACCESS_KEY_KEY,
             REGION_KEY
@@ -33,7 +33,7 @@ export class UserMetaStorage {
     static removeUserMeta(onGetStorageKeyValue:()=>void){
         // This function removes all user metadata from chrome's storage
 
-        chrome.storage.local.remove([ACCESS_KEY_ID_KEY, SECRET_ACCESS_KEY_KEY, REGION_KEY], function() {
+        chrome.storage.session.remove([ACCESS_KEY_ID_KEY, SECRET_ACCESS_KEY_KEY, REGION_KEY], function() {
             onGetStorageKeyValue();
         });
     }
