@@ -7,7 +7,10 @@
        "types": [
          "react",
          "react-dom",
-         "chrome"
+         "chrome",
+         "aws-sdk",
+         "node",
+         "react-select"
        ],
        "esModuleInterop": true,
        "sourceMap": true,
@@ -15,9 +18,10 @@
        "noEmitOnError": true,
     },
     "include": [
-      "./src"
+      "./src",
     ],
     "exclude": [
       "node_modules",
+      "test"
     ]
  }
