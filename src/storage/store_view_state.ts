@@ -17,11 +17,11 @@ export class ViewStateStorage {
         });
     }
 
-    static clearViewState(){
-        // The functionality is currently too aggressive. Instead of clearing all contents, only the view state would 
-        // need to be cleared. This will change after other metadata regarding the user is configured to be stored in 
-        // in chrome storage
+    static removeViewState(onGetStorageKeyValue:()=>void){
+        // This function removes view state from chrome's storage
 
-        chrome.storage.local.clear();
+        chrome.storage.local.remove([VIEW_STATE_KEY], function() {
+            onGetStorageKeyValue();
+        });
     }
 }
