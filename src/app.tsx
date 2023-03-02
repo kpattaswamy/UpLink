@@ -2,7 +2,9 @@ import React, {useState} from 'react';
 import {render} from 'react-dom';
 import {GetS3Keys} from './aws_s3_auth';
 import { MyS3Auth } from './aws_s3_auth_conn';
-import {ViewStateStorage} from './storage/handle_view_state';
+import {ViewStateStorage} from './storage/store_view_state';
+import {UserMetaStorage} from './storage/store_user_metadata';
+
 
 // Type Props specifies a function that will change the state of App
 type Props = {
@@ -31,7 +33,8 @@ export class App extends React.Component<Props, State>{
         };
 
         // "Reconstruct" the App object if necessary
-        ViewStateStorage.getViewState(this.changeViewStatefromStorage);
+        ViewStateStorage.getViewState(this.updateViewStatefromStorage);
+        UserMetaStorage.getUserS3Obj(this.updateS3ObjFromStorage)
     }
 
     // Function that will be passed as a prop to update the state of the UI
@@ -46,13 +49,19 @@ export class App extends React.Component<Props, State>{
         this.setState({s3Obj})
     }
 
-    // Changes the state from what is in storage
-    changeViewStatefromStorage = (view:string) => {
+    // Changes the view state from what is in storage
+    updateViewStatefromStorage = (view:string) => {
         if (view === 'auth' || view === 'config-bucket'){
             this.setViewState(view);
         } else {
             console.error("Trying to swtich to a UI view state that doesn't exist")
         }
+    }
+
+    // Updates the s3 object from what is in storage
+    updateS3ObjFromStorage = (accessKeyId:string, secretAccessKey:string, region:string) => {
+        const s3Obj = new MyS3Auth(accessKeyId, secretAccessKey, region);
+        this.setS3Obj(s3Obj);
     }
 
     // Logout function should move into configure bucket and send file classes
