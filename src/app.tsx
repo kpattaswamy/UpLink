@@ -101,19 +101,21 @@ export class App extends React.Component<Props, State>{
             
             {this.state.view === 'config-bucket' 
             && 
-            
-            <div> 
-                Configure the bucket
-                <div id="logout">
-                    <button
-                        type="button" 
-                        value="Logout"
-                        onClick={this.logout}
-                    >
-                        Logout
-                    </button>
-                </div>
-            </div>}
+            <div>
+                <BucketConfigurator
+                    onS3ObjChange={this.setS3Obj}
+                    onViewChange={this.setViewState}
+                    existingS3Obj={this.state.s3Obj!}
+                />
+                <button
+                    type="button" 
+                    value="Logout"
+                    onClick={this.logout}
+                >
+                    Logout
+                </button>
+            </div>
+            }
         </div>
         )
     }
