@@ -1,7 +1,5 @@
 import React, {FormEvent} from 'react';
 import { MyS3Auth } from './aws_s3_auth_conn';
-import {ViewStateStorage} from './storage/store_view_state';
-import {UserMetaStorage} from './storage/store_user_metadata';
 
 
 // Stores the Bucket name from user input
@@ -37,13 +35,13 @@ export class BucketConfigurator extends React.Component<Props>{
 
         // User's keys for AWS S3
         const bucketName = target.bucketName.value;
-        console.log(bucketName);
 
         // Reuse the S3 object from App
-        // const s3Auth = this.props.existingS3Obj;
+        const s3Auth = this.props.existingS3Obj!;
 
         // Configure the bucket
-        // s3Auth.changeBucket(bucketName);
+        s3Auth.changeBucket(bucketName);
+        s3Auth.checkAndDisplayValidBucket(this.props.onViewChange!, 'temp-window', this.props.onS3ObjChange!, s3Auth);
     };
 
     render () {
