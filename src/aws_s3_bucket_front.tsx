@@ -17,7 +17,7 @@ interface BucketNameForm extends HTMLFormElement {
 type Props = {
   onViewChange? : (s:string)=>void,
   onS3ObjChange? : (o:MyS3Auth)=>void,
-  existingS3Obj: MyS3Auth
+  existingS3Obj?: MyS3Auth
 };
 
 export class BucketConfigurator extends React.Component<Props>{
@@ -37,8 +37,32 @@ export class BucketConfigurator extends React.Component<Props>{
         const bucketName = target.bucketName.value;
 
         // Reuse the S3 object from App
+        const s3Auth = this.props.existingS3Obj;
 
+        // Configure the bucket
+        // s3Auth.changeBucket(bucketName);
     };
 
+    render () {
+        return(
+            <form className="form" onSubmit={this.onSubmit}>
+                <div id="welcomeMessage">
+                    <h1>Access your bucket</h1>
+                </div>
+                <div className="field">
+                    <div id="keyLabels">
+                        <label htmlFor="bucketName">AWS S3 Bucket Name</label>
+                    </div>
 
+                    <input
+                        type="text"
+                        id="bucketName"
+                    />
+                </div>
+                <div id="bucketButton">
+                    <button type="submit">Submit</button>
+                </div>
+            </form>
+        )
+    }
 }

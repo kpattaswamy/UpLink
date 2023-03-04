@@ -4,6 +4,7 @@ import {GetS3Keys} from './aws_s3_auth';
 import { MyS3Auth } from './aws_s3_auth_conn';
 import {ViewStateStorage} from './storage/store_view_state';
 import {UserMetaStorage} from './storage/store_user_metadata';
+import {BucketConfigurator} from './aws_s3_bucket_front';
 
 // Type Props specifies a function that will change the state of App
 type Props = {
@@ -100,6 +101,7 @@ export class App extends React.Component<Props, State>{
             
             {this.state.view === 'config-bucket' 
             && 
+            
             <div> 
                 Configure the bucket
                 <div id="logout">
