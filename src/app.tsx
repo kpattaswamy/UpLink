@@ -1,20 +1,20 @@
 import React, {useState} from 'react';
 import {render} from 'react-dom';
 import {GetS3Keys} from './aws_s3_auth';
-import { MyS3Auth } from './aws_s3_auth_conn';
+import { UserS3 } from './aws_s3_connect';
 import {ViewStateStorage} from './storage/store_view_state';
 import {UserMetaStorage} from './storage/store_user_metadata';
 
 // Type Props specifies a function that will change the state of App
 type Props = {
     onViewChange? : (s:string)=>void,
-    onS3ObjChange? : (o:MyS3Auth)=>void
+    onS3ObjChange? : (o:UserS3)=>void
 };
 
 // Type ViewState specifies the state (auth, bucket configuration, file upload display, etc)
 type State = {
     view: string;
-    s3Obj: MyS3Auth | null;
+    s3Obj: UserS3 | null;
 }
 
 // App will serve as the root node for the "tree" of different UIs. It will always render the "state" that is set by any sub function  
@@ -43,7 +43,7 @@ export class App extends React.Component<Props, State>{
     }
 
     // Function that will be passed as prop to globalize the S3 Object being made
-    setS3Obj(s3Obj:MyS3Auth | null){
+    setS3Obj(s3Obj:UserS3 | null){
 
         this.setState({s3Obj});
 
@@ -68,7 +68,7 @@ export class App extends React.Component<Props, State>{
         // Access keys could be undefined if chrome storage returns undefined for a key that doesn't exist
         if (accessKeyId !== undefined && secretAccessKey !== undefined && region !== undefined){
 
-            const s3Obj = new MyS3Auth(accessKeyId, secretAccessKey, region);
+            const s3Obj = new UserS3(accessKeyId, secretAccessKey, region);
             this.setS3Obj(s3Obj); 
         }
     }
