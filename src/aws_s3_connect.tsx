@@ -62,9 +62,9 @@ export class UserS3 {
 
 
   // Change the user's keys
-  changeUser(publicKey : string, privateKey : string) {
+  changeUser(publicKey : string, privateKey : string) : boolean {
     if (publicKey.length === 0 || privateKey.length === 0) {
-      throw new Error("Public and private keys cannot be empty")
+      return false;
     }
 
     // Changing S3Client object
@@ -86,12 +86,14 @@ export class UserS3 {
     });
 
     this.validUser = false;
+
+    return true;
   }
 
   // Change the bucket name
   changeBucket(bucketName : string) : boolean {
     if (bucketName.length === 0) {
-      throw new Error("Bucket name cannot be empty");
+      return false;
     }
     this.whichBucket = bucketName;
     this.validUser = false;
