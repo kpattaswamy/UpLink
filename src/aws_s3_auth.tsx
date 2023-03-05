@@ -6,7 +6,6 @@ import { UserS3 } from './aws_s3_connect';
 interface AWS3Keys extends HTMLFormControlsCollection {
   accessKey: HTMLInputElement;
   secretAccessKey: HTMLInputElement;
-  bucketName: HTMLInputElement;
 }
 
 // Make the param for onSubmit of type readonly 
@@ -37,7 +36,6 @@ export class GetS3Keys extends React.Component<Props>{
       const awsS3Keys = {
           accessKey: target.accessKey.value,
           secretAccessKey: target.secretAccessKey.value,
-          bucketName: target.bucketName.value
       };
 
       // Create a new S3Auth object with the user's keys
@@ -71,16 +69,6 @@ export class GetS3Keys extends React.Component<Props>{
                 <input 
                   type="password" 
                   id="secretAccessKey"
-                />
-            </div>
-            <div className="field">
-                <div id="keyLabels">
-                  <label htmlFor="bucketName">AWS S3 Bucket Name</label>
-                </div>
-
-                <input
-                  type="text"
-                  id="bucketName"
                 />
             </div>
             <div id="authSubmit">
