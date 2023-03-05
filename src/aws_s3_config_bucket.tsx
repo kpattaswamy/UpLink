@@ -33,7 +33,7 @@ export class BucketConfigurator extends React.Component<Props>{
 
         const target = event.currentTarget.elements;
 
-        // User's keys for AWS S3
+        // User's selected bucket name
         const bucketName = target.bucketName.value;
 
         // Reuse the S3 object from App
@@ -41,17 +41,17 @@ export class BucketConfigurator extends React.Component<Props>{
 
         // Configure the bucket
         s3Auth.changeBucket(bucketName);
-        s3Auth.checkAndDisplayValidBucket(this.props.onViewChange!, 'temp-window', this.props.onS3ObjChange!, s3Auth);
+        s3Auth.checkBucketAndChangeUI(this.props.onViewChange!, 'temp-window', this.props.onS3ObjChange!, s3Auth);
     };
 
     render () {
         return(
             <form className="form" onSubmit={this.onSubmit}>
-                <div id="welcomeMessage">
+                <div id="bucketMessage">
                     <h1>Access your bucket</h1>
                 </div>
                 <div className="field">
-                    <div id="keyLabels">
+                    <div id="bucketNme">
                         <label htmlFor="bucketName">AWS S3 Bucket Name</label>
                     </div>
 
