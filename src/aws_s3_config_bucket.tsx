@@ -1,5 +1,5 @@
 import React, {FormEvent} from 'react';
-import { MyS3Auth } from './aws_s3_auth_conn';
+import { UserS3 } from './aws_s3_connect';
 
 
 // Stores the Bucket name from user input
@@ -16,8 +16,8 @@ interface BucketNameForm extends HTMLFormElement {
 // Type prop meant to be called with the identifier of the new state (UI) for App to render
 type Props = {
   onViewChange? : (s:string)=>void,
-  onS3ObjChange? : (o:MyS3Auth)=>void,
-  existingS3Obj?: MyS3Auth
+  onS3ObjChange? : (o:UserS3)=>void,
+  existingS3Obj?: UserS3
 };
 
 export class BucketConfigurator extends React.Component<Props>{

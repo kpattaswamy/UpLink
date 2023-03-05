@@ -1,4 +1,4 @@
-import { MyS3Auth } from '../aws_s3_auth_conn';
+import { UserS3 } from '../aws_s3_connect';
 
 const ACCESS_KEY_ID_KEY = 'publicKey';
 const SECRET_ACCESS_KEY_KEY = 'privateKey';
@@ -6,7 +6,7 @@ const REGION_KEY = 'region';
 
 export class UserMetaStorage {
 
-    static putUserS3Obj(user:MyS3Auth){
+    static putUserS3Obj(user:UserS3){
         // This function adds all user metadata to storage
 
         const accessKeyId = user._accessKeyId;

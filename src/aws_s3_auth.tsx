@@ -1,5 +1,5 @@
 import React, {FormEvent} from 'react';
-import { MyS3Auth } from './aws_s3_auth_conn';
+import { UserS3 } from './aws_s3_connect';
   
 
 // Stores the S3 keys from user input
@@ -16,7 +16,7 @@ interface AWSAuthForm extends HTMLFormElement {
 // Type prop meant to be called with the identifier of the new state (UI) for App to render
 type Props = {
   onViewChange? : (s:string)=>void,
-  onS3ObjChange? : (o:MyS3Auth)=>void
+  onS3ObjChange? : (o:UserS3)=>void
 };
 
 export class GetS3Keys extends React.Component<Props>{
@@ -39,7 +39,7 @@ export class GetS3Keys extends React.Component<Props>{
       };
 
       // Create a new S3Auth object with the user's keys
-      const s3Auth = new MyS3Auth(awsS3Keys.accessKey, awsS3Keys.secretAccessKey);
+      const s3Auth = new UserS3(awsS3Keys.accessKey, awsS3Keys.secretAccessKey);
 
       // Following function call will validate the user and only after validation will the S3 object be stored in app
       s3Auth.checkAndDisplayValidUser(this.props.onViewChange!, 'config-bucket', this.props.onS3ObjChange!, s3Auth);
