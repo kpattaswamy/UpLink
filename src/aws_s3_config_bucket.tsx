@@ -48,7 +48,7 @@ export class BucketConfigurator extends React.Component<Props>{
         return(
             <form className="form" onSubmit={this.onSubmit}>
                 <div id="bucketMessage">
-                    <h1>Access your bucket</h1>
+                    <h1>Configure your S3 Bucket</h1>
                 </div>
                 <div className="field">
                     <div id="bucketNme">
@@ -60,8 +60,8 @@ export class BucketConfigurator extends React.Component<Props>{
                         id="bucketName"
                     />
                 </div>
-                <div id="bucketButton">
-                    <button type="submit">Submit</button>
+                <div id="bucketSubmit">
+                    <button type="submit">Configure</button>
                 </div>
             </form>
         )

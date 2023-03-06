@@ -107,13 +107,15 @@ export class App extends React.Component<Props, State>{
                     onViewChange={this.setViewState}
                     existingS3Obj={this.state.s3Obj!}
                 />
-                <button
-                    type="button" 
-                    value="Logout"
-                    onClick={this.logout}
-                >
-                    Logout
-                </button>
+                <div id="logout">
+                    <button
+                        type="button" 
+                        value="Logout"
+                        onClick={this.logout}
+                    >
+                        Logout
+                    </button>
+                </div>
             </div>
             }
 
@@ -126,7 +128,7 @@ export class App extends React.Component<Props, State>{
                     value="Logout"
                     onClick={this.logout}
                 >
-                    Reset for Testing
+                    Logout
                 </button>
             </div>
             }
