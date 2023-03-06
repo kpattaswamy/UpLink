@@ -2,6 +2,7 @@ import React from "react";
 
 console.log("welcome to uplink from console");
 let links: string[] = ["String"];
+//Initialize populated array of strings for URLs
 
 chrome.contextMenus.removeAll(function() {
     chrome.contextMenus.create({
@@ -18,5 +19,6 @@ chrome.contextMenus.onClicked.addListener(function(info,tab){
     {
         links.shift();
     }
+    //Push URL to link array and removes the 'String' placeholder
     console.log(links)
 });
