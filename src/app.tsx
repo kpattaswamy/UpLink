@@ -107,27 +107,31 @@ export class App extends React.Component<Props, State>{
                     onViewChange={this.setViewState}
                     existingS3Obj={this.state.s3Obj!}
                 />
-                <button
-                    type="button" 
-                    value="Logout"
-                    onClick={this.logout}
-                >
-                    Logout
-                </button>
+                <div id="logout">
+                    <button
+                        type="button" 
+                        value="Logout"
+                        onClick={this.logout}
+                    >
+                        Logout
+                    </button>
+                </div>
             </div>
             }
 
             {this.state.view === 'temp-window'
             &&
             <div>
-                <h1>Temp Window</h1>
-                <button
-                    type="button" 
-                    value="Logout"
-                    onClick={this.logout}
-                >
-                    Reset for Testing
-                </button>
+                <h1>Send Files</h1>
+                <div id="logout">
+                    <button
+                        type="button" 
+                        value="Logout"
+                        onClick={this.logout}
+                    >
+                        Logout
+                    </button>
+                </div>
             </div>
             }
         </div>
