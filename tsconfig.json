@@ -7,19 +7,21 @@
        "types": [
          "react",
          "react-dom",
-         "chrome"
+         "chrome",
+         "aws-sdk",
+         "node",
+         "react-select"
        ],
        "esModuleInterop": true,
        "sourceMap": true,
        "rootDir": "src",
-       //"outDir": "dist/js",
        "noEmitOnError": true,
-       //"typeRoots": [ "node_modules/@types" ]
     },
     "include": [
-      "./src"
+      "./src",
     ],
     "exclude": [
       "node_modules",
+      "test"
     ]
  }

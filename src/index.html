@@ -1,19 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <style> 
+        body {
+            background-color: rgb(187, 221, 219);
+        }
+
+        input[type=text], input[type=password] {
+          width: 100%;
+          padding: 12px 20px;
+          margin: 8px 0;
+          box-sizing: border-box;
+          border: none;
+          border-radius: 9px;
+          background-color: white;
+          color: black;
+        }
+
+        button[type=button], button[type=submit]{
+            background-color: rgb(238, 178, 88);
+            border: none;
+            border-radius: 20px;
+            color: black;
+            padding: 16px 32px;
+            text-decoration: none;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+
+        #authSubmit {
+            display: flex;
+            justify-content: center;
+            margin: 0 auto;
+            font-weight: bold;
+        }
+
+        #logout {
+            display: flex;
+            justify-content: center;
+            margin: 0 auto;
+            font-weight: bold;
+        }
+
+        #welcomeMessage {
+            display: flex;
+            justify-content: center;
+            margin: 0 auto;
+            color: rgb(22, 27, 51);
+        }
+        
+        #keyLabels {
+            color: rgb(22, 27, 51);
+            font-weight: 600;
+        }
+        
+    </style>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Log In Page</title>
-
+    <title>Document</title>
 </head>
-<body style="width: 300px;">
-    <<h1> Enter AWS Credentials </h1> 
-    <form id="login-form">
-        <input type="text" name="username" id="username" class="login-form-field" placeholder="Enter AWS Username">
-        <input type="password" name="password" id="password" class="login-form-field" placeholder="Enter Password">
-        <input type="submit" value="Login" id="submit">
-    </form>
-    <div id="popup"></div>
-    <button onclick="submit()">Log In</button>
+
+<body style="width: 300px; height: 400px;">
+    <div id="root"></div>
 </body>
 </html>
