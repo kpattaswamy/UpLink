@@ -56,7 +56,7 @@ export class App extends React.Component<Props, State>{
 
     // Changes the view state from what is in storage
     updateViewStatefromStorage = (view:string) => {
-        if (view === 'auth' || view === 'config-bucket'){
+        if (view === 'auth' || view === 'config-bucket' || view === 'temp-window'){
             this.setViewState(view);
         } else {
             console.error("Trying to swtich to a UI view state that doesn't exist")
