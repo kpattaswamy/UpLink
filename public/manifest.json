@@ -9,5 +9,13 @@
   },
   "background": {
 		"service_worker": "background.js"
+<<<<<<< HEAD
   }
 } 
+=======
+  },
+  "permissions": [
+    "storage"
+  ]
+}
+>>>>>>> main
