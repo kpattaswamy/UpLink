@@ -122,14 +122,16 @@ export class App extends React.Component<Props, State>{
             {this.state.view === 'temp-window'
             &&
             <div>
-                <h1>Temp Window</h1>
-                <button
-                    type="button" 
-                    value="Logout"
-                    onClick={this.logout}
-                >
-                    Logout
-                </button>
+                <h1>Send Files</h1>
+                <div id="logout">
+                    <button
+                        type="button" 
+                        value="Logout"
+                        onClick={this.logout}
+                    >
+                        Logout
+                    </button>
+                </div>
             </div>
             }
         </div>
