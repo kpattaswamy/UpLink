@@ -3,22 +3,24 @@
 <head>
     <style> 
         body {
-            background-color: rgb(187, 221, 219);
+            background-color: white;
         }
 
         input[type=text], input[type=password] {
           width: 100%;
-          padding: 12px 20px;
+          padding: 6px 2px;
           margin: 8px 0;
           box-sizing: border-box;
-          border: none;
-          border-radius: 9px;
-          background-color: white;
-          color: black;
+          color:black;
+          border-color: rgb(40, 167, 160);
+          outline: 0;
+          border-width: 0 0 3px;
+          font-size: 16px;
+          margin-bottom:16px;
         }
 
         button[type=button], button[type=submit]{
-            background-color: rgb(238, 178, 88);
+            background-color: rgb(157, 221, 217);
             border: none;
             border-radius: 20px;
             color: black;
@@ -26,6 +28,14 @@
             text-decoration: none;
             margin: 4px 2px;
             cursor: pointer;
+            transition-duration: 0.4s;
+            font-size: 16px;
+            font-family: "Monaco"
+        }
+
+        button:hover {
+            background-color: rgb(80, 196, 196);
+            color: white
         }
 
         #authSubmit {
@@ -35,6 +45,10 @@
             font-weight: bold;
         }
 
+        #authSubmitButton {
+            margin-top: 16px;
+        }
+
         #bucketSubmit {
             display: flex;
             justify-content: center;
@@ -42,11 +56,23 @@
             font-weight: bold;
         }
 
+        #bucketSubmitButton {
+            color: black;
+            margin-top: 16px;
+            font-family: "Monaco"
+        }
+
         #logout {
             display: flex;
             justify-content: center;
-            margin: 0 auto;
+            margin-top: 16px;
             font-weight: bold;
+        }
+
+        #logoutButton:hover {
+            background-color: rgb(174, 185, 185);
+            color: black;
+            font-family: "Monaco"
         }
 
         #welcomeMessage {
@@ -54,18 +80,29 @@
             justify-content: center;
             margin: 0 auto;
             color: rgb(22, 27, 51);
+            font-family: "Monaco";
+            padding-bottom: 15px;
+
         }
 
         #bucketMessage {
             display: flex;
             justify-content: center;
             margin: 0 auto;
-            color: rgb(22, 27, 51);
+            color: rgb(22, 27, 51);            
+            font-family: "Monaco"
+        }
+
+        #buckets {
+            color: rgb(50, 94, 100);
+            font-weight: 600;
+            font-size: 13px;
         }
         
         #keyLabels {
-            color: rgb(22, 27, 51);
+            color: rgb(50, 94, 100);
             font-weight: 600;
+            font-size: 13px;
         }
         
     </style>

@@ -48,11 +48,11 @@ export class BucketConfigurator extends React.Component<Props>{
         return(
             <form className="form" onSubmit={this.onSubmit}>
                 <div id="bucketMessage">
-                    <h1>Configure your S3 Bucket</h1>
+                    <h1>Add your Bucket</h1>
                 </div>
                 <div className="field">
-                    <div id="bucketNme">
-                        <label htmlFor="bucketName">AWS S3 Bucket Name</label>
+                    <div id="buckets">
+                        <label htmlFor="bucketName">Enter your bucket's name for file transfer:</label>
                     </div>
 
                     <input
