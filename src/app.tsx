@@ -109,6 +109,7 @@ export class App extends React.Component<Props, State>{
                 />
                 <div id="logout">
                     <button
+                        id="logoutButton"
                         type="button" 
                         value="Logout"
                         onClick={this.logout}
@@ -125,6 +126,7 @@ export class App extends React.Component<Props, State>{
                 <h1>Send Files</h1>
                 <div id="logout">
                     <button
+                        id="logoutButton"
                         type="button" 
                         value="Logout"
                         onClick={this.logout}

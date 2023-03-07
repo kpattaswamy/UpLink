@@ -53,7 +53,7 @@ export class GetS3Keys extends React.Component<Props>{
             </div>
             <div className="field">
                 <div id="keyLabels">
-                  <label htmlFor="accessKey">AWS S3 Access Key</label>
+                  <label htmlFor="accessKey">Enter your AWS S3 Access Key:</label>
                 </div>
 
                 <input 
@@ -63,7 +63,7 @@ export class GetS3Keys extends React.Component<Props>{
             </div>
             <div className="field">
                 <div id="keyLabels">
-                    <label htmlFor="secretAccessKey">AWS S3 Secret Access Key</label>
+                    <label htmlFor="secretAccessKey">Enter your AWS S3 Secret Access Key:</label>
                 </div>
 
                 <input 
@@ -73,6 +73,7 @@ export class GetS3Keys extends React.Component<Props>{
             </div>
             <div id="authSubmit">
                 <button
+                  id="authSubmitButton"
                   type="submit" 
                   value="Authenticate"
                 >
