@@ -3,6 +3,7 @@
   "description": "Send files to the cloud with a single click!",
   "version": "1.0",
   "manifest_version": 3,
+  "permissions": ["contextMenus","tabs"],
   "action": {    
     "default_popup": "index.html"
   },
