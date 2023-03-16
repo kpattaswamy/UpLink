@@ -41,7 +41,7 @@ export class BucketConfigurator extends React.Component<Props>{
 
         // Configure the bucket
         s3Auth.changeBucket(bucketName);
-        s3Auth.checkBucketAndChangeUI(this.props.onViewChange!, 'temp-window', this.props.onS3ObjChange!, s3Auth);
+        s3Auth.checkBucketAndChangeUI(this.props.onViewChange!, 'file-transfer', this.props.onS3ObjChange!, s3Auth);
     };
 
     render () {
