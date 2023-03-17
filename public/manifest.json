@@ -3,14 +3,23 @@
   "description": "Send files to the cloud with a single click!",
   "version": "1.0",
   "manifest_version": 3,
-  "permissions": ["contextMenus","tabs"],
+  "permissions": [
+    "contextMenus",
+    "tabs", 
+    "http://*/", 
+    "https://*/*",
+    "storage"
+  ],
   "action": {    
     "default_popup": "index.html"
   },
   "background": {
 		"service_worker": "background.js"
   },
-  "permissions": [
-    "storage"
-  ]
+
+  "optional_host_permissions": [
+    "https://*/*",
+    "http://*/*"
+  ],
+  "host_permissions": ["<all_urls>"]
 }

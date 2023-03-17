@@ -53,14 +53,17 @@ export class FileTransfer extends React.Component<Props, TableState>{
         // This will need to be expanded to support URL validation (success column)
         const row: RowData = {data:fileURL}
         
-        // Following should execute after URL validation
-        // Send file to S3
+        const s3Client = this.props.existingS3Obj!;
+
+        // Necessary to avoid duplicate file names being sent to bucket. 
+        // This will need to be changed for robustness when naming files
+        let dateTime = new Date()
+
+        s3Client.uploadFile(fileURL, s3Client.whichBucket, dateTime.toString());
 
         // Show the user whether a succesful transfer happened and log it in state
         this.addRow(row);
         this.updateTable(row);
-        (document.getElementById("urlForm")! as HTMLFormElement).reset();
-
     };
 
     // Updates the table on UI to show the user the new file trying to be sent

@@ -66,12 +66,14 @@ export class App extends React.Component<Props, State>{
     }
 
     // Updates the s3 object from what is in storage
-    updateS3ObjFromStorage = (accessKeyId:string, secretAccessKey:string, region:string) => {
+    updateS3ObjFromStorage = (accessKeyId:string, secretAccessKey:string, region:string, bucket:string) => {
 
         // Access keys could be undefined if chrome storage returns undefined for a key that doesn't exist
-        if (accessKeyId !== undefined && secretAccessKey !== undefined && region !== undefined){
+        if (accessKeyId !== undefined && secretAccessKey !== undefined && region !== undefined && bucket !== undefined){
 
             const s3Obj = new UserS3(accessKeyId, secretAccessKey, region);
+            s3Obj.changeBucket(bucket);
+            
             this.setS3Obj(s3Obj); 
         }
     }
