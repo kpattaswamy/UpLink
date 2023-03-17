@@ -116,10 +116,10 @@ export class FileTransfer extends React.Component<Props, TableState>{
                     <div id="filesSentTable">
                         <table id="table">
                             <thead>
-                                    <th>File URL</th>
-                                    <th>Status</th>
+                                    <th id="tableHeader">File URL</th>
+                                    <th id="tableHeader">Status</th>
                             </thead>
-                            <tbody id="tab"></tbody>
+                            <tbody id="body"></tbody>
                         </table>
                     </div>
                 </form>

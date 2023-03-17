@@ -29,8 +29,7 @@ export class App extends React.Component<Props, State>{
         this.setViewState = this.setViewState.bind(this);
         this.setS3Obj = this.setS3Obj.bind(this);
         this.state = {
-            //view: 'auth',
-            view: 'file-transfer',
+            view: 'auth',
             s3Obj: null
         };
 
