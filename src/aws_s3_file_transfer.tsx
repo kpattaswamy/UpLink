@@ -59,6 +59,8 @@ export class FileTransfer extends React.Component<Props, TableState>{
         // Show the user whether a succesful transfer happened and log it in state
         this.addRow(row);
         this.updateTable(row);
+        (document.getElementById("urlForm")! as HTMLFormElement).reset();
+
     };
 
     // Updates the table on UI to show the user the new file trying to be sent
@@ -69,11 +71,16 @@ export class FileTransfer extends React.Component<Props, TableState>{
         const newRow = tbodyRef.insertRow();
 
         // Insert cell at the end of the row
-        const newCell = newRow.insertCell();
+        const urlCell = newRow.insertCell();
+        const statusCell = newRow.insertCell();
 
         // Append text node to the cell
         const urlString = document.createTextNode(newRowData.data);
-        newCell.appendChild(urlString);
+        urlCell.appendChild(urlString);
+
+        // Will change in a later PR to reflect true status
+        const unknown = document.createTextNode("unknown");
+        statusCell.appendChild(unknown);
     }
 
 
@@ -84,7 +91,7 @@ export class FileTransfer extends React.Component<Props, TableState>{
                     <h1>Send Files</h1>
                 </div>
 
-                <form className="form" onSubmit={this.onSubmit}>
+                <form className="form" id="urlInput" onSubmit={this.onSubmit}>
                     <div id="filesSentTable">
                         <table id="table">
                             <thead>
