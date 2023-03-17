@@ -51,7 +51,7 @@ export class BucketConfigurator extends React.Component<Props>{
                     <h1>Add your Bucket</h1>
                 </div>
                 <div className="field">
-                    <div id="buckets">
+                    <div id="bucketLabel">
                         <label htmlFor="bucketName">Enter your bucket's name for file transfer:</label>
                     </div>
 

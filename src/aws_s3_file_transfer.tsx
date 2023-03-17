@@ -88,10 +88,31 @@ export class FileTransfer extends React.Component<Props, TableState>{
         return(
             <div>
                 <div id="sendFilesHeader">
-                    <h1>Send Files</h1>
+                    <h1>Upload Files</h1>
                 </div>
 
                 <form className="form" id="urlInput" onSubmit={this.onSubmit}>
+                    <div id="inputSubmitWrapper">
+                        <div className="field" id="fileURLInput">
+                            <div id="fileLabel">
+                                <label htmlFor="fileURL">Enter the file URL to upload to your S3 Bucket:</label>
+                            </div>
+
+                            <input
+                                type="text"
+                                id="fileURL"
+                            />
+                        </div>
+
+                        <div id="fileSubmit">
+                            <button 
+                            type="submit"
+                            id="fileSubmitButton">
+                            Upload
+                            </button>
+                        </div>
+                    </div>
+
                     <div id="filesSentTable">
                         <table id="table">
                             <thead>
@@ -100,21 +121,6 @@ export class FileTransfer extends React.Component<Props, TableState>{
                             </thead>
                             <tbody id="tab"></tbody>
                         </table>
-                    </div>
-
-                    <div className="field">
-                        <div id="fileLabel">
-                            <label htmlFor="fileURL">Enter file URL to send it to your S3 bucket:</label>
-                        </div>
-
-                        <input
-                            type="text"
-                            id="fileURL"
-                        />
-                    </div>
-
-                    <div id="fileSubmit">
-                        <button type="submit">Send File</button>
                     </div>
                 </form>
             </div>
