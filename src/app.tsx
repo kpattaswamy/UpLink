@@ -5,6 +5,8 @@ import { UserS3 } from './aws_s3_connect';
 import {ViewStateStorage} from './storage/store_view_state';
 import {UserMetaStorage} from './storage/store_user_metadata';
 import {BucketConfigurator} from './aws_s3_config_bucket';
+import {FileTransfer} from './aws_s3_file_transfer';
+
 
 // Type Props specifies a function that will change the state of App
 type Props = {
@@ -56,7 +58,7 @@ export class App extends React.Component<Props, State>{
 
     // Changes the view state from what is in storage
     updateViewStatefromStorage = (view:string) => {
-        if (view === 'auth' || view === 'config-bucket' || view === 'temp-window'){
+        if (view === 'auth' || view === 'config-bucket' || view === 'file-transfer'){
             this.setViewState(view);
         } else {
             console.error("Trying to swtich to a UI view state that doesn't exist")
@@ -120,10 +122,14 @@ export class App extends React.Component<Props, State>{
             </div>
             }
 
-            {this.state.view === 'temp-window'
+            {this.state.view === 'file-transfer'
             &&
             <div>
-                <h1>Send Files</h1>
+                <FileTransfer
+                    onS3ObjChange={this.setS3Obj}
+                    onViewChange={this.setViewState}
+                    existingS3Obj={this.state.s3Obj!}
+                />                
                 <div id="logout">
                     <button
                         id="logoutButton"

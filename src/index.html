@@ -56,17 +56,18 @@
             font-weight: bold;
         }
 
-        #bucketSubmitButton {
-            color: black;
-            margin-top: 16px;
-            font-family: "Monaco"
-        }
-
         #logout {
             display: flex;
             justify-content: center;
-            margin-top: 16px;
             font-weight: bold;
+            position:absolute;
+            bottom:0;
+            left:100px;
+        }
+
+        #logoutButton{
+            width:300px;
+            font-size:18px;
         }
 
         #logoutButton:hover {
@@ -85,24 +86,51 @@
 
         }
 
-        #bucketMessage {
+        #bucketMessage, #sendFilesHeader {
             display: flex;
             justify-content: center;
             margin: 0 auto;
             color: rgb(22, 27, 51);            
             font-family: "Monaco"
         }
-
-        #buckets {
+        
+        #keyLabels, #fileLabel, #bucketLabel {
             color: rgb(50, 94, 100);
             font-weight: 600;
             font-size: 13px;
         }
         
-        #keyLabels {
-            color: rgb(50, 94, 100);
+        #inputSubmitWrapper{
+            display: flex;
+            justify-content: space-between;
+        }
+
+        #fileURLInput {
+            width: 360px;
+        }
+
+        #fileSubmitButton{
+            font-size: 16px;
+            text-align: center;
+        }
+
+        table, td, th {
+            border: 1px solid rgb(167, 164, 164);
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td {
+            font-size: 14px;
+        }
+
+        #tableHeader {
+            color: rgb(70, 163, 175);
             font-weight: 600;
-            font-size: 13px;
+            font-size: 16px;
         }
         
     </style>
@@ -111,7 +139,7 @@
     <title>Document</title>
 </head>
 
-<body style="width: 300px; height: 400px;">
+<body style="width: 500px; height: 750px;">
     <div id="root"></div>
 </body>
 </html>
