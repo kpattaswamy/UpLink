@@ -5,6 +5,7 @@ import {
 } from "@aws-sdk/client-s3"; // ES Modules import
 import { STSClient, GetCallerIdentityCommand } from "@aws-sdk/client-sts";
 import axios from "axios";
+import {UpdateStateMeta} from './aws_s3_config_bucket';
 
 export class UserS3 {
   // S3Client and STSClient object
@@ -106,25 +107,21 @@ export class UserS3 {
     this.whichBucket = bucketName;
     this.validUser = false;
 
-    // Returning true for unit tests
     return true;
   }
 
   // Check if the user's keys are valid for specified bucket
   // Save the S3 object made upon validation
-  // Code after this function call will likely execute before this function finishes
   checkBucketAndChangeUI(
-    setViewState: (args: string) => void,
-    args: string,
-    setS3Obj: (s3Obj: UserS3) => void,
-    s3Obj: UserS3
+    stateMeta: UpdateStateMeta,
+    callback: (stateMeta:UpdateStateMeta) => boolean,
   ) {
     const command = new HeadBucketCommand({ Bucket: this.whichBucket });
     this.s3Client
       .send(command)
       .then((data) => {
-        setS3Obj(s3Obj);
-        setViewState(args);
+
+        callback(stateMeta);
         this.validBucket = true;
       })
       .catch((err) => {
