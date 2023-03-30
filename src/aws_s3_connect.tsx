@@ -70,6 +70,14 @@ export class UserS3 {
     return this.secretAccessKey;
   }
 
+  get _s3Client(): S3Client {
+    return this.s3Client;
+  }
+
+  set _s3Client(s:any) {
+    this.s3Client = s;
+  }
+
   // Change the user's keys
   changeUser(publicKey: string, privateKey: string): boolean {
     if (publicKey.length === 0 || privateKey.length === 0) {
