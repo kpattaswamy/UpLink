@@ -61,6 +61,7 @@ export class App extends React.Component<Props, State>{
         }
     }
 
+    // Function that will be passed as prop to update the URL Array
     setURLArray(urlArray:Array<string>) {
         if(urlArray != undefined)
         {
@@ -96,6 +97,7 @@ export class App extends React.Component<Props, State>{
         }
     }
     
+    //Updates the URL Array from what it is in storage
     updateURLArrayfromStorage = (urlArray:Array<string>) => {
         if(urlArray != undefined) {
             this.setURLArray(urlArray);

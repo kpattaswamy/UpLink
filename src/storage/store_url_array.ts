@@ -3,25 +3,25 @@ const URL_KEY = 'urlKey';
 
 export class URLStorage
 {
+    //Gets URL array from memory, pushes link, and stores the updated Array
     static putURL(url:string)
     {
         chrome.storage.session.get([URL_KEY], function(result) {
-            console.log(result);
             let urlArray = result[URL_KEY] ?? [];
-            console.log(urlArray);
             urlArray.push(url);
-            console.log(urlArray);
 
             chrome.storage.session.set({ [URL_KEY]: urlArray });
         });
     }
 
+    //Retrieves URL Array from memory
     static getURLs(onGetStorageKeyValue:(a:Array<string>)=>void) {
         chrome.storage.session.get([URL_KEY], function(result) {
             onGetStorageKeyValue(result[URL_KEY]);
         });
     }
 
+    //Clears URLs from URL array
     static clearURLs(onGetStorageKeyValue:()=>void){
         chrome.storage.session.remove([URL_KEY], function() {
             onGetStorageKeyValue();
