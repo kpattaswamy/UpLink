@@ -4,7 +4,7 @@ import {GetS3Keys} from './aws_s3_auth';
 import { UserS3 } from './aws_s3_connect';
 import {ViewStateStorage} from './storage/store_view_state';
 import {UserMetaStorage} from './storage/store_user_metadata';
-import {BucketConfigurator} from './aws_s3_config_bucket';
+import {ConfigureBucket} from './aws_s3_config_bucket';
 import {FileTransfer} from './aws_s3_file_transfer';
 import { URLStorage } from './storage/store_url_array';
 
@@ -139,7 +139,7 @@ export class App extends React.Component<Props, State>{
             {this.state.view === 'config-bucket' 
             && 
             <div>
-                <BucketConfigurator
+                <ConfigureBucket
                     onS3ObjChange={this.setS3Obj}
                     onViewChange={this.setViewState}
                     existingS3Obj={this.state.s3Obj!}

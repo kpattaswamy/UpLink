@@ -1,7 +1,6 @@
 import React, {FormEvent} from 'react';
 import { UserS3 } from './aws_s3_connect';
 
-
 // Stores the Bucket name from user input
 interface BucketName extends HTMLFormControlsCollection {
     bucketName: HTMLInputElement;
@@ -20,10 +19,34 @@ type Props = {
   existingS3Obj?: UserS3
 };
 
-export class BucketConfigurator extends React.Component<Props>{
+export interface UpdateStateMeta {
+    setViewState: (view: string) => void,
+    view: string,
+    setS3Obj: (s3Obj: UserS3) => void,
+    s3Obj: UserS3
+}
+
+export class ConfigureBucket extends React.Component<Props>{
 
     constructor(props:Props){
         super(props);
+    }
+
+    // Callback to be provided to: class UserS3 function checkBucketAndChangeUI
+    changeUIBucketStates = (stateMeta:UpdateStateMeta) : boolean => {
+        if (stateMeta.view !== 'auth' && stateMeta.view !== 'config-bucket' && stateMeta.view !== 'file-transfer'){
+            return false;
+        }
+
+        // s3Obj *could* be null when logged out or when retrieved from storage
+        if (stateMeta.s3Obj === null){
+            return false;
+        }
+
+        stateMeta.setS3Obj(stateMeta.s3Obj);
+        stateMeta.setViewState(stateMeta.view);
+
+        return true;
     }
 
     // Function to configure the bucket
@@ -37,11 +60,25 @@ export class BucketConfigurator extends React.Component<Props>{
         const bucketName = target.bucketName.value;
 
         // Reuse the S3 object from App
-        const s3Auth = this.props.existingS3Obj!;
+        const s3 = this.props.existingS3Obj!;
 
         // Configure the bucket
-        s3Auth.changeBucket(bucketName);
-        s3Auth.checkBucketAndChangeUI(this.props.onViewChange!, 'file-transfer', this.props.onS3ObjChange!, s3Auth);
+        const resp = s3.changeBucket(bucketName);
+
+        // Check the bucket only after it was changed in the object properly
+        if (resp){
+            const stateMeta : UpdateStateMeta = {
+                setViewState: this.props.onViewChange!,
+                view: 'file-transfer',
+                setS3Obj: this.props.onS3ObjChange!,
+                s3Obj: s3
+            };
+            s3.checkBucketAndChangeUI(stateMeta, this.changeUIBucketStates);
+
+        } else {
+            console.log("Empty bucket name given!");
+            // Render HTML to let the user know that invalid bucket name was given
+        }
     };
 
     render () {
