@@ -1,17 +1,9 @@
 import React from "react";
-import { FileTransfer } from "./aws_s3_file_transfer";
-import { UserS3 } from './aws_s3_connect';
+import { URLStorage } from "./storage/store_url_array";
 
 console.log("welcome to uplink from console");
 let links: string[] = ["String"];
 //Initialize populated array of strings for URLs
-
-// Props that will be derived from  App class
-type Props = {
-    onViewChange? : (s:string)=>void,
-    onS3ObjChange? : (o:UserS3)=>void,
-    existingS3Obj? : UserS3
-  };
 
 chrome.contextMenus.removeAll(function() {
     chrome.contextMenus.create({
@@ -30,7 +22,7 @@ chrome.contextMenus.onClicked.addListener(function(info,tab){
     }
     //Push URL to link array and removes the 'String' placeholder
 
-    console.log(links);
+    URLStorage.putURL(link);
 });
 
 //Function checks if url string can be converted to a valid URL, that points to a PDF

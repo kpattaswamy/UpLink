@@ -6,18 +6,20 @@ import {ViewStateStorage} from './storage/store_view_state';
 import {UserMetaStorage} from './storage/store_user_metadata';
 import {BucketConfigurator} from './aws_s3_config_bucket';
 import {FileTransfer} from './aws_s3_file_transfer';
-
+import { URLStorage } from './storage/store_url_array';
 
 // Type Props specifies a function that will change the state of App
 type Props = {
     onViewChange? : (s:string)=>void,
-    onS3ObjChange? : (o:UserS3)=>void
+    onS3ObjChange? : (o:UserS3)=>void,
+    onURLArrayChange? : (a:Array<string>)=>void
 };
 
 // Type ViewState specifies the state (auth, bucket configuration, file upload display, etc)
 type State = {
     view: string;
     s3Obj: UserS3 | null;
+    urlArray: Array<string>;
 }
 
 // App will serve as the root node for the "tree" of different UIs. It will always render the "state" that is set by any sub function  
@@ -28,14 +30,17 @@ export class App extends React.Component<Props, State>{
         super(props);
         this.setViewState = this.setViewState.bind(this);
         this.setS3Obj = this.setS3Obj.bind(this);
+        this.setURLArray = this.setURLArray.bind(this);
         this.state = {
             view: 'auth',
-            s3Obj: null
+            s3Obj: null,
+            urlArray: []
         };
 
         // "Reconstruct" the App object if necessary
         ViewStateStorage.getViewState(this.updateViewStatefromStorage);
         UserMetaStorage.getUserS3Obj(this.updateS3ObjFromStorage);
+        URLStorage.getURLs(this.updateURLArrayfromStorage);
     }
 
     // Function that will be passed as a prop to update the state of the UI
@@ -53,6 +58,19 @@ export class App extends React.Component<Props, State>{
         // Change the user metadata only if the s3 object is not null
         if (s3Obj){
             UserMetaStorage.putUserS3Obj(s3Obj!);
+        }
+    }
+
+    setURLArray(urlArray:Array<string>) {
+        if(urlArray != undefined)
+        {
+            this.setState({urlArray});
+            for(var url of urlArray) {
+                URLStorage.putURL(url);
+            }
+        }
+        else {
+            console.log("Invalid URL Array");
         }
     }
 
@@ -77,6 +95,14 @@ export class App extends React.Component<Props, State>{
             this.setS3Obj(s3Obj); 
         }
     }
+    
+    updateURLArrayfromStorage = (urlArray:Array<string>) => {
+        if(urlArray != undefined) {
+            this.setURLArray(urlArray);
+        } else {
+            console.log("URL Array is Invalid");
+        }
+    }
 
     // Logout function should move into configure bucket and send file classes. Contained in App for now
     logout = () => {
@@ -89,8 +115,13 @@ export class App extends React.Component<Props, State>{
             this.setS3Obj(null);
         }
 
+        const urlCallback = () => {
+            this.setURLArray([]);
+        }
+
         ViewStateStorage.removeViewState(viewCallback);
         UserMetaStorage.removeUserMeta(userCallback);
+        URLStorage.clearURLs(urlCallback);
     }
 
     render() {
