@@ -6,18 +6,20 @@ import {ViewStateStorage} from './storage/store_view_state';
 import {UserMetaStorage} from './storage/store_user_metadata';
 import {ConfigureBucket} from './aws_s3_config_bucket';
 import {FileTransfer} from './aws_s3_file_transfer';
-
+import { URLStorage } from './storage/store_url_array';
 
 // Type Props specifies a function that will change the state of App
 type Props = {
     onViewChange? : (s:string)=>void,
-    onS3ObjChange? : (o:UserS3)=>void
+    onS3ObjChange? : (o:UserS3)=>void,
+    onURLArrayChange? : (a:Array<string>)=>void
 };
 
 // Type ViewState specifies the state (auth, bucket configuration, file upload display, etc)
 type State = {
     view: string;
     s3Obj: UserS3 | null;
+    urlArray: Array<string>;
 }
 
 // App will serve as the root node for the "tree" of different UIs. It will always render the "state" that is set by any sub function  
@@ -28,14 +30,17 @@ export class App extends React.Component<Props, State>{
         super(props);
         this.setViewState = this.setViewState.bind(this);
         this.setS3Obj = this.setS3Obj.bind(this);
+        this.setURLArray = this.setURLArray.bind(this);
         this.state = {
             view: 'auth',
-            s3Obj: null
+            s3Obj: null,
+            urlArray: []
         };
 
         // "Reconstruct" the App object if necessary
         ViewStateStorage.getViewState(this.updateViewStatefromStorage);
         UserMetaStorage.getUserS3Obj(this.updateS3ObjFromStorage);
+        URLStorage.getURLArray(this.updateURLArrayfromStorage);
     }
 
     // Function that will be passed as a prop to update the state of the UI
@@ -56,13 +61,22 @@ export class App extends React.Component<Props, State>{
         }
     }
 
+    // Function that will be passed as prop to update the URL Array
+    setURLArray(urlArray:Array<string>) {
+        if(urlArray)
+        {
+            this.setState({urlArray});
+            for(var url of urlArray) {
+                URLStorage.putURL(url);
+            }
+        }
+    }
+
     // Changes the view state from what is in storage
     updateViewStatefromStorage = (view:string) => {
         if (view === 'auth' || view === 'config-bucket' || view === 'file-transfer'){
             this.setViewState(view);
-        } else {
-            console.error("Trying to swtich to a UI view state that doesn't exist")
-        }
+        } 
     }
 
     // Updates the s3 object from what is in storage
@@ -77,6 +91,13 @@ export class App extends React.Component<Props, State>{
             this.setS3Obj(s3Obj); 
         }
     }
+    
+    //Updates the URL Array from what it is in storage
+    updateURLArrayfromStorage = (urlArray:Array<string>) => {
+        if(urlArray) {
+            this.setURLArray(urlArray);
+        } 
+    }
 
     // Logout function should move into configure bucket and send file classes. Contained in App for now
     logout = () => {
@@ -89,8 +110,13 @@ export class App extends React.Component<Props, State>{
             this.setS3Obj(null);
         }
 
+        const urlCallback = () => {
+            this.setURLArray([]);
+        }
+
         ViewStateStorage.removeViewState(viewCallback);
         UserMetaStorage.removeUserMeta(userCallback);
+        URLStorage.removeURLArray(urlCallback);
     }
 
     render() {
