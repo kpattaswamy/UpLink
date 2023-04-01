@@ -1,12 +1,12 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {render} from 'react-dom';
-import {GetS3Keys} from './aws_s3_auth';
-import { UserS3 } from './aws_s3_connect';
-import {ViewStateStorage} from './storage/store_view_state';
-import {UserMetaStorage} from './storage/store_user_metadata';
+import {WelcomeUser} from './welcome_user';
+import {UserS3} from './aws_s3_connect';
+import {AuthS3} from './aws_s3_auth';
 import {ConfigureBucket} from './aws_s3_config_bucket';
 import {FileTransfer} from './aws_s3_file_transfer';
-
+import {ViewStateStorage} from './storage/store_view_state';
+import {UserMetaStorage} from './storage/store_user_metadata';
 
 // Type Props specifies a function that will change the state of App
 type Props = {
@@ -29,7 +29,7 @@ export class App extends React.Component<Props, State>{
         this.setViewState = this.setViewState.bind(this);
         this.setS3Obj = this.setS3Obj.bind(this);
         this.state = {
-            view: 'auth',
+            view: 'welcome',
             s3Obj: null
         };
 
@@ -58,7 +58,7 @@ export class App extends React.Component<Props, State>{
 
     // Changes the view state from what is in storage
     updateViewStatefromStorage = (view:string) => {
-        if (view === 'auth' || view === 'config-bucket' || view === 'file-transfer'){
+        if (view === 'welcome' || view === 'auth' || view === 'config-bucket' || view === 'file-transfer'){
             this.setViewState(view);
         } else {
             console.error("Trying to swtich to a UI view state that doesn't exist")
@@ -82,7 +82,7 @@ export class App extends React.Component<Props, State>{
     logout = () => {
         
         const viewCallback = () => {
-            this.setViewState('auth');
+            this.setViewState('welcome');
         }
 
         const userCallback = () => {
@@ -96,9 +96,15 @@ export class App extends React.Component<Props, State>{
     render() {
         return (
         <div>
+            {this.state.view === 'welcome' 
+            &&
+            <WelcomeUser
+                onViewChange={this.setViewState}
+            />}
+
             {this.state.view === 'auth' 
             &&
-            <GetS3Keys
+            <AuthS3
                 onViewChange={this.setViewState}
                 onS3ObjChange = {this.setS3Obj}
             />}
