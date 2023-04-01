@@ -70,18 +70,13 @@ export class App extends React.Component<Props, State>{
                 URLStorage.putURL(url);
             }
         }
-        else {
-            console.log("Invalid URL Array");
-        }
     }
 
     // Changes the view state from what is in storage
     updateViewStatefromStorage = (view:string) => {
         if (view === 'auth' || view === 'config-bucket' || view === 'file-transfer'){
             this.setViewState(view);
-        } else {
-            console.error("Trying to swtich to a UI view state that doesn't exist")
-        }
+        } 
     }
 
     // Updates the s3 object from what is in storage
@@ -101,9 +96,7 @@ export class App extends React.Component<Props, State>{
     updateURLArrayfromStorage = (urlArray:Array<string>) => {
         if(urlArray) {
             this.setURLArray(urlArray);
-        } else {
-            console.log("URL Array is Invalid");
-        }
+        } 
     }
 
     // Logout function should move into configure bucket and send file classes. Contained in App for now

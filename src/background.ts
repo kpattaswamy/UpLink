@@ -1,8 +1,6 @@
 import React from "react";
 import { URLStorage } from "./storage/store_url_array";
 
-console.log("welcome to uplink from console");
-
 //Creates a Context Menu right click option for saving pdf links
 chrome.contextMenus.removeAll(function() {
     chrome.contextMenus.create({
