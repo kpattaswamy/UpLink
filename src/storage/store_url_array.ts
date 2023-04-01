@@ -15,14 +15,14 @@ export class URLStorage
     }
 
     //Retrieves URL Array from memory
-    static getURLs(onGetStorageKeyValue:(a:Array<string>)=>void) {
+    static getURLArray(onGetStorageKeyValue:(a:Array<string>)=>void) {
         chrome.storage.session.get([URL_KEY], function(result) {
             onGetStorageKeyValue(result[URL_KEY]);
         });
     }
 
     //Clears URLs from URL array
-    static clearURLs(onGetStorageKeyValue:()=>void){
+    static removeURLArray(onGetStorageKeyValue:()=>void){
         chrome.storage.session.remove([URL_KEY], function() {
             onGetStorageKeyValue();
         });

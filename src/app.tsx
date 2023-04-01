@@ -40,7 +40,7 @@ export class App extends React.Component<Props, State>{
         // "Reconstruct" the App object if necessary
         ViewStateStorage.getViewState(this.updateViewStatefromStorage);
         UserMetaStorage.getUserS3Obj(this.updateS3ObjFromStorage);
-        URLStorage.getURLs(this.updateURLArrayfromStorage);
+        URLStorage.getURLArray(this.updateURLArrayfromStorage);
     }
 
     // Function that will be passed as a prop to update the state of the UI
@@ -63,7 +63,7 @@ export class App extends React.Component<Props, State>{
 
     // Function that will be passed as prop to update the URL Array
     setURLArray(urlArray:Array<string>) {
-        if(urlArray != undefined)
+        if(urlArray)
         {
             this.setState({urlArray});
             for(var url of urlArray) {
@@ -99,7 +99,7 @@ export class App extends React.Component<Props, State>{
     
     //Updates the URL Array from what it is in storage
     updateURLArrayfromStorage = (urlArray:Array<string>) => {
-        if(urlArray != undefined) {
+        if(urlArray) {
             this.setURLArray(urlArray);
         } else {
             console.log("URL Array is Invalid");
@@ -123,7 +123,7 @@ export class App extends React.Component<Props, State>{
 
         ViewStateStorage.removeViewState(viewCallback);
         UserMetaStorage.removeUserMeta(userCallback);
-        URLStorage.clearURLs(urlCallback);
+        URLStorage.removeURLArray(urlCallback);
     }
 
     render() {
