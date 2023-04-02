@@ -4,7 +4,6 @@ const VIEW_STATE_KEY = 'viewState';
 export class ViewStateStorage {
     static putViewState(value:string){
         // This function adds the key:value => VIEW_STATE_KEY:'ui state' to storage
-
         chrome.storage.session.set({ [VIEW_STATE_KEY]: value });
     }
     
