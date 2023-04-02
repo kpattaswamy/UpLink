@@ -93,6 +93,15 @@ export class App extends React.Component<Props, State>{
         UserMetaStorage.removeUserMeta(userCallback);
     }
 
+    // Currently lets user go back to the welcome UI from the auth UI
+    goBack = () => {
+        const viewCallback = () => {
+            this.setViewState('welcome');
+        }
+
+        ViewStateStorage.removeViewState(viewCallback);
+    }
+
     render() {
         return (
         <div>
@@ -104,10 +113,23 @@ export class App extends React.Component<Props, State>{
 
             {this.state.view === 'auth' 
             &&
-            <AuthS3
-                onViewChange={this.setViewState}
-                onS3ObjChange = {this.setS3Obj}
-            />}
+            <div>
+                <AuthS3
+                    onViewChange={this.setViewState}
+                    onS3ObjChange = {this.setS3Obj}
+                />
+                <div id="goBack">
+                    <button
+                        id="goBackButton"
+                        type="button" 
+                        value="goBack"
+                        onClick={this.goBack}
+                    >
+                        Go Back
+                    </button>
+                </div>
+            </div>
+            }
             
             {this.state.view === 'config-bucket' 
             && 

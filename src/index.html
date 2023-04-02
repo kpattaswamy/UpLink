@@ -43,6 +43,7 @@
             justify-content: center;
             margin: 0 auto;
             font-weight: bold;
+            padding-bottom: 240px;
         }
 
         #authSubmitButton {
@@ -56,21 +57,26 @@
             font-weight: bold;
         }
 
-        #logout {
+        #logout, #goBack {
             display: flex;
             justify-content: center;
+            margin: 0 auto;
             font-weight: bold;
-            position:absolute;
+            position: absolute;;
             bottom:0;
-            left:100px;
+            padding-bottom: 10px;
+            left:125px;
         }
 
-        #logoutButton{
-            width:300px;
-            font-size:18px;
+        #logoutButton, #goBackButton{
+            display: flex;
+            justify-content: center;
+            width:250px;
+            font-size:16px;
+            margin: 0 auto;
         }
 
-        #logoutButton:hover {
+        #logoutButton:hover, #goBackButton:hover {
             background-color: rgb(174, 185, 185);
             color: black;
             font-family: "Monaco"

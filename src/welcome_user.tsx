@@ -5,7 +5,6 @@ type Props = {
     onViewChange? : (s:string)=>void
 };
 
-
 export class WelcomeUser extends React.Component<Props>{
 
     constructor(props:Props){
