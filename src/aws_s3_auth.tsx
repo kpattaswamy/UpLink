@@ -19,7 +19,7 @@ type Props = {
   onS3ObjChange? : (o:UserS3)=>void
 };
 
-export class GetS3Keys extends React.Component<Props>{
+export class AuthS3 extends React.Component<Props>{
 
   constructor(props:Props){
     super(props);
@@ -48,8 +48,8 @@ export class GetS3Keys extends React.Component<Props>{
   render () {
     return(
         <form className="form" onSubmit={this.onSubmit}>
-            <div id="welcomeMessage">
-                <h1>Welcome to UpLink!</h1>
+            <div id="authMessage">
+                <h1>Configure your AWS S3 Account</h1>
             </div>
             <div className="field">
                 <div id="keyLabels">
