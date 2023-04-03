@@ -5,7 +5,7 @@ import { URLStorage } from "./storage/store_url_array";
 chrome.contextMenus.removeAll(function() {
     chrome.contextMenus.create({
         id: "rightclickoption",
-        title: "Send with Uplink",
+        title: "Send with UpLink",
         contexts:["link"],
        });
 });
