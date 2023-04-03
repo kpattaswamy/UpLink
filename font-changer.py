@@ -8,7 +8,8 @@ file_to_change = "src/index.html"
 if len(sys.argv) < 2:
     os.exit(1)
     
-font_chosen = sys.argv[1]
+# Acconts for fonts with multiple words
+font_chosen = " ".join(sys.argv[1:])
 
 text = open(file_to_change).read()  # read the entire file content
 
