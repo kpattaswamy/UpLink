@@ -8,13 +8,13 @@ export class ViewStateStorage {
 
         //updates the right click option visibility accordingly
         if(value === 'file-transfer') {
-            chrome.contextMenus.update('rightclickoption', {
-                visible: true
+            chrome.contextMenus.update('right-click-option', {
+                enabled: true
             });
         }
         else {
-            chrome.contextMenus.update('rightclickoption', {
-                visible: false
+            chrome.contextMenus.update('right-click-option', {
+                enabled: false
             });
         }
     }

@@ -5,13 +5,13 @@ import { URLStorage } from "./storage/store_url_array";
 chrome.contextMenus.removeAll(function() {
     chrome.contextMenus.create({
         //identifier for right contextmenu item
-        id: "rightclickoption",
+        id: "right-click-option",
         //message for the option
         title: "Send with Uplink",
         //only applies to links
         contexts:["link"],
         //initially set to false, but is updated depending on the view state
-        visible:false,
+        enabled:false,
     });
 });
 
