@@ -1,12 +1,12 @@
 import sys
 import re
-import os
 
-file_to_change = "src/index.html"
+file_to_change = "../src/index.html"
 
 
 if len(sys.argv) < 2:
-    os.exit(1)
+    print("Usage: font-changer.py <font_name>")
+    sys.exit(1)
     
 # Acconts for fonts with multiple words
 font_chosen = " ".join(sys.argv[1:])
