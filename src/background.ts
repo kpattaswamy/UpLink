@@ -15,7 +15,7 @@ chrome.contextMenus.removeAll(function() {
     });
 });
 
-chrome.contextMenus.onClicked.addListener(function(info,tab){
+chrome.contextMenus.onClicked.addListener(function(info){
     let link:string = info.linkUrl as string;
 
     //Updates the URL Array stored in memory with the new link
