@@ -5,6 +5,16 @@ export class ViewStateStorage {
     static putViewState(value:string){
         // This function adds the key:value => VIEW_STATE_KEY:'ui state' to storage
         chrome.storage.session.set({ [VIEW_STATE_KEY]: value });
+        if(value === 'file-transfer') {
+            chrome.contextMenus.update('rightclickoption', {
+                visible: true
+            });
+        }
+        else {
+            chrome.contextMenus.update('rightclickoption', {
+                visible: false
+            });
+        }
     }
     
     static getViewState(onGetStorageKeyValue:(s:string)=>void){
