@@ -18,6 +18,18 @@ chrome.contextMenus.removeAll(function() {
 chrome.contextMenus.onClicked.addListener(function(info){
     let link:string = info.linkUrl as string;
 
-    //Updates the URL Array stored in memory with the new link
-    URLStorage.putURL(link);
+    //Updates the URL Array stored in memory with the new link if link points to valid file
+    if(validateURL(link)) 
+    {
+        URLStorage.putURL(link);
+    }
 });
+
+function validateURL(url:string) {
+    try {
+        new URL(url);
+        return true;
+    } catch(err) {
+        return false;
+    }
+}
