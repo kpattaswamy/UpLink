@@ -32,4 +32,5 @@ function validateURL(url:string) {
     } catch(err) {
         return false;
     }
+    return true;
 }
