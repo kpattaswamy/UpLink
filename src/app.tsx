@@ -14,6 +14,7 @@ type Props = {
     onViewChange? : (s:string)=>void,
     onS3ObjChange? : (o:UserS3)=>void,
     onURLArrayChange? : (a:Array<string>)=>void
+    onAddURL? : (u:string)=>void
 };
 
 // Type ViewState specifies the state (auth, bucket configuration, file upload display, etc)
@@ -64,13 +65,25 @@ export class App extends React.Component<Props, State>{
 
     // Function that will be passed as prop to update the URL Array
     setURLArray(urlArray:Array<string>) {
-        if(urlArray)
-        {
+        if(urlArray){
             this.setState({urlArray});
+
             for(var url of urlArray) {
                 URLStorage.putURL(url);
             }
         }
+    }
+
+    // Adds a singular URL to state and storage
+    // Doesn't rely on setURLArray b/c that function can lead to duplicate writes in storage
+    addUrl(url:string){
+        const callback = (urlArray:Array<string>) => {
+            urlArray.push(url);
+            this.setState({urlArray});
+            URLStorage.putURL(url);
+        }
+
+        URLStorage.getURLArray(callback);
     }
 
     // Changes the view state from what is in storage
@@ -186,6 +199,8 @@ export class App extends React.Component<Props, State>{
                     onS3ObjChange={this.setS3Obj}
                     onViewChange={this.setViewState}
                     existingS3Obj={this.state.s3Obj!}
+                    onAddURL={this.addUrl}
+                    existingURLArray={this.state.urlArray!}
                 />                
                 <div id="logout">
                     <button

@@ -14,6 +14,8 @@ type Props = {
   onViewChange? : (s:string)=>void,
   onS3ObjChange? : (o:UserS3)=>void,
   existingS3Obj? : UserS3
+  onAddURL? : (u:string)=>void
+  existingURLArray? : Array<string>
 };
 
 // Store all data relavent to a row for the table (URL,success status, trash)
@@ -34,6 +36,17 @@ export class FileTransfer extends React.Component<Props, TableState>{
         this.state = {
             tableRows: [],
         };
+
+        // Reconstruct state and the table on UI if there was a URL array in storage
+        const existingURLArray = this.props.existingURLArray;
+
+        if(existingURLArray!.length > 0) {
+            for (let url in existingURLArray){
+                const row : RowData = {data:url}
+                this.addRow(row);
+                this.updateTable(row);
+            }
+        } 
     }
 
     // Adds the new row's data to state
@@ -49,6 +62,9 @@ export class FileTransfer extends React.Component<Props, TableState>{
 
         // URL for the file inputted
         const fileURL = target.fileURL.value;
+
+        // Add URL to state and storage
+        this.props.onAddURL!(fileURL);
 
         // This will need to be expanded to support URL validation (success column)
         const row: RowData = {data:fileURL}
