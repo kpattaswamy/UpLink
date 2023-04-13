@@ -1,6 +1,11 @@
 import React from "react";
 import { URLStorage } from "./storage/store_url_array";
 
+const ACCESS_KEY_ID_KEY = 'publicKey';
+const SECRET_ACCESS_KEY_KEY = 'privateKey';
+const REGION_KEY = 'region';
+const BUCKET_KEY = 'bucket';
+
 //Creates a Context Menu right click option for saving pdf links
 chrome.contextMenus.removeAll(function() {
     chrome.contextMenus.create({
@@ -36,7 +41,6 @@ export function validateURL(url:string) {
     //checks if extension is pdf
     const urlParts = url.split(".");
     const extension = urlParts[urlParts.length - 1];
-    console.log(extension);
     if(extension.toLowerCase() != "pdf") {
         return false;
     }
