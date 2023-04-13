@@ -1,5 +1,6 @@
 import React from "react";
 import { URLStorage } from "./storage/store_url_array";
+import { UserS3 } from './aws_s3_connect';
 
 const ACCESS_KEY_ID_KEY = 'publicKey';
 const SECRET_ACCESS_KEY_KEY = 'privateKey';
@@ -23,9 +24,21 @@ chrome.contextMenus.removeAll(function() {
 chrome.contextMenus.onClicked.addListener(function(info){
     let link:string = info.linkUrl as string;
 
-    //Updates the URL Array stored in memory with the new link if link points to valid file
-    if(validateURL(link)) {
+    if(validateURL(link)){
         URLStorage.putURL(link);
+        chrome.storage.session.get([ACCESS_KEY_ID_KEY], function(result1) {
+            chrome.storage.session.get([SECRET_ACCESS_KEY_KEY], function(result2) {
+                chrome.storage.session.get([REGION_KEY], function(result3) {
+                    let accessKey = result1[ACCESS_KEY_ID_KEY];
+                    let secretKey = result2[SECRET_ACCESS_KEY_KEY];
+                    let region = result3[REGION_KEY];
+    
+                    const s3Obj = new UserS3(accessKey, secretKey, region);
+                    let dateTime = new Date();
+                    s3Obj.uploadFile(link, s3Obj.whichBucket, dateTime.toString());
+                });
+            });
+        });
     }
 });
 
