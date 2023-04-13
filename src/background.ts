@@ -19,17 +19,25 @@ chrome.contextMenus.onClicked.addListener(function(info){
     let link:string = info.linkUrl as string;
 
     //Updates the URL Array stored in memory with the new link if link points to valid file
-    if(validateURL(link)) 
-    {
+    if(validateURL(link)) {
         URLStorage.putURL(link);
     }
 });
 
-function validateURL(url:string) {
+//Function that checks whether URL string points to a valid pdf URL
+export function validateURL(url:string) {
+    //tries to create URL object with string, returns false if returns error
     try {
         new URL(url);
-        return true;
-    } catch(err) {
+    } catch(err) {  
+        return false;
+    }
+
+    //checks if extension is pdf
+    const urlParts = url.split(".");
+    const extension = urlParts[urlParts.length - 1];
+    console.log(extension);
+    if(extension.toLowerCase() != "pdf") {
         return false;
     }
     return true;
