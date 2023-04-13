@@ -33,18 +33,21 @@ export class FileTransfer extends React.Component<Props, TableState>{
     constructor(props:Props){
         super(props);
         this.addRow = this.addRow.bind(this);
+        this.updateTable = this.updateTable.bind(this);
+        this.updateFromStorage = this.updateFromStorage.bind(this);
         this.state = {
             tableRows: [],
         };
+        this.updateFromStorage();
+    }
 
-        // Reconstruct state and the table on UI if there was a URL array in storage
+    // Update the table rows from what is stored in storage (Targets reconstructing this UI)
+    updateFromStorage = () => {
         const existingURLArray = this.props.existingURLArray;
-
         if(existingURLArray!.length > 0) {
             for (let url in existingURLArray){
                 const row : RowData = {data:url}
                 this.addRow(row);
-                this.updateTable(row);
             }
         } 
     }
@@ -74,14 +77,15 @@ export class FileTransfer extends React.Component<Props, TableState>{
         // Necessary to avoid duplicate file names being sent to bucket. 
         // This will need to be changed for robustness when naming files
         let dateTime = new Date()
-
         s3Client.uploadFile(fileURL, s3Client.whichBucket, dateTime.toString());
 
         // Show the user whether a succesful transfer happened and log it in state
         this.addRow(row);
-        this.updateTable(row);
     };
 
+    // STALE FUNCTION
+    // Keeping it here because it might be of use when dealing with status of files sent 
+    // NEW Implementation: Rows are rendered from memory brought by the App
     // Updates the table on UI to show the user the new file trying to be sent
     updateTable = (newRowData:RowData) => {
         const tbodyRef = document.getElementById('filesSentTable')!.getElementsByTagName('tbody')[0];
@@ -101,7 +105,6 @@ export class FileTransfer extends React.Component<Props, TableState>{
         const unknown = document.createTextNode("unknown");
         statusCell.appendChild(unknown);
     }
-
 
     render () {
         return(
@@ -138,7 +141,16 @@ export class FileTransfer extends React.Component<Props, TableState>{
                                     <th id="tableHeader">File URL</th>
                                     <th id="tableHeader">Status</th>
                             </thead>
-                            <tbody id="body"></tbody>
+                            <tbody id="body">
+                                {this.props.existingURLArray?.map(row => {
+                                    return (
+                                        <tr>
+                                            <td>{row}</td>
+                                            <td>{"unknown"}</td>
+                                        </tr>
+                                    )
+                                })}
+                            </tbody>
                         </table>
                     </div>
                 </form>

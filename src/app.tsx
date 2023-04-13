@@ -21,7 +21,7 @@ type Props = {
 type State = {
     view: string;
     s3Obj: UserS3 | null;
-    urlArray: Array<string>;
+    urlArray: Array<string> | null;
 }
 
 // App will serve as the root node for the "tree" of different UIs. It will always render the "state" that is set by any sub function  
@@ -33,6 +33,7 @@ export class App extends React.Component<Props, State>{
         this.setViewState = this.setViewState.bind(this);
         this.setS3Obj = this.setS3Obj.bind(this);
         this.setURLArray = this.setURLArray.bind(this);
+        this.addURL = this.addURL.bind(this);
         this.state = {
             view: 'welcome',
             s3Obj: null,
@@ -40,9 +41,9 @@ export class App extends React.Component<Props, State>{
         };
 
         // "Reconstruct" the App object if necessary
-        ViewStateStorage.getViewState(this.updateViewStatefromStorage);
         UserMetaStorage.getUserS3Obj(this.updateS3ObjFromStorage);
         URLStorage.getURLArray(this.updateURLArrayfromStorage);
+        ViewStateStorage.getViewState(this.updateViewStatefromStorage);
     }
 
     // Function that will be passed as a prop to update the state of the UI
@@ -64,22 +65,21 @@ export class App extends React.Component<Props, State>{
     }
 
     // Function that will be passed as prop to update the URL Array
-    setURLArray(urlArray:Array<string>) {
+    setURLArray(urlArray:Array<string> | null) {
         if(urlArray){
             this.setState({urlArray});
-
-            for(var url of urlArray) {
-                URLStorage.putURL(url);
-            }
         }
     }
 
     // Adds a singular URL to state and storage
     // Doesn't rely on setURLArray b/c that function can lead to duplicate writes in storage
-    addUrl(url:string){
+    addURL(url:string){
         const callback = (urlArray:Array<string>) => {
-            urlArray.push(url);
-            this.setState({urlArray});
+            if(urlArray){     
+                urlArray.push(url);
+                this.setState({urlArray});
+            } 
+
             URLStorage.putURL(url);
         }
 
@@ -199,7 +199,7 @@ export class App extends React.Component<Props, State>{
                     onS3ObjChange={this.setS3Obj}
                     onViewChange={this.setViewState}
                     existingS3Obj={this.state.s3Obj!}
-                    onAddURL={this.addUrl}
+                    onAddURL={this.addURL}
                     existingURLArray={this.state.urlArray!}
                 />                
                 <div id="logout">
