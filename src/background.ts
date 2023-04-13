@@ -33,10 +33,10 @@ export function validateURL(url:string) {
         return false;
     }
 
-    //checks if extension is pdf
+    //checks if extension is not html/css
     const urlParts = url.split(".");
     const extension = urlParts[urlParts.length - 1];
-    if(extension.toLowerCase() != "pdf") {
+    if(extension.toLowerCase() === "html" || extension.toLowerCase() === "css") {
         return false;
     }
     return true;
