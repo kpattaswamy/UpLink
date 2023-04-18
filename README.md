@@ -8,6 +8,9 @@ UpLink is a chrome extension that allows users to upload files from the browser 
 ## System Diagram:
 <img width="945" alt="Screen Shot 2023-04-17 at 12 51 35 PM" src="https://user-images.githubusercontent.com/62078498/232555600-57163a7a-4bed-4fd7-9e96-9ad4a86909a1.png">
 
+## How does UpLink store your data?
+UpLink stores your data (authentication keys, URL's) in the chrome browser's session storage. UpLink only uses your authentication keys to access the chosen cloud service in order to send files to. These keys are removed from your browser as soon as the extension's session is ended or when you logout from the extension.
+
 ## To Contribute
 1. Clone the repository: `git clone git@github.com:kpattaswamy/UpLink.git`
 2. Install dependencies: `npm install`
@@ -19,6 +22,3 @@ UpLink is a chrome extension that allows users to upload files from the browser 
 2. Select `Load unpacked`
 3. Load the `dist` folder from the UpLink project
 4. Pin UpLink 
-
-## How does UpLink store your data?
-UpLink stores your data (authentication keys, URL's) in the chrome browser's session storage. These keys are removed from your browser as soon as the extension's session is ended or when you logout from the extension.
