@@ -138,8 +138,8 @@ export class FileTransfer extends React.Component<Props, TableState>{
                     <div id="filesSentTable">
                         <table id="table">
                             <thead>
-                                    <th id="tableHeader">File URL</th>
-                                    <th id="tableHeader">Status</th>
+                                    <th id="urlID">File URL</th>
+                                    <th id="statusID">Status</th>
                             </thead>
                             <tbody id="body">
                                 {this.props.existingURLArray?.map(row => {
