@@ -153,7 +153,7 @@ export class UserS3 {
   }
 
   uploadFile = (url: string, bucketName: string, uniqueTime: string) => {
-    const r = axios
+    const resp = axios
       .get(encodeURI(url), {
         responseType: "arraybuffer",
         withCredentials: true,
