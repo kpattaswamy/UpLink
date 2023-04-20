@@ -1,6 +1,7 @@
 import React from "react";
 import { URLStorage } from "./storage/store_url_array";
 import { UserS3 } from './aws_s3_connect';
+import { UserMetaStorage } from "./storage/store_user_metadata";
 
 const ACCESS_KEY_ID_KEY = 'publicKey';
 const SECRET_ACCESS_KEY_KEY = 'privateKey';
@@ -26,19 +27,23 @@ chrome.contextMenus.onClicked.addListener(function(info){
 
     if(validateURL(link)){
         URLStorage.putURL(link);
-        chrome.storage.session.get([ACCESS_KEY_ID_KEY], function(result1) {
-            chrome.storage.session.get([SECRET_ACCESS_KEY_KEY], function(result2) {
-                chrome.storage.session.get([REGION_KEY], function(result3) {
-                    let accessKey = result1[ACCESS_KEY_ID_KEY];
-                    let secretKey = result2[SECRET_ACCESS_KEY_KEY];
-                    let region = result3[REGION_KEY];
+
+        UserMetaStorage.sendToS3Object(uploadToS3Object);
+
+
+        // chrome.storage.session.get([ACCESS_KEY_ID_KEY], function(result1) {
+        //     chrome.storage.session.get([SECRET_ACCESS_KEY_KEY], function(result2) {
+        //         chrome.storage.session.get([REGION_KEY], function(result3) {
+        //             const accessKey = result1[ACCESS_KEY_ID_KEY];
+        //             const secretKey = result2[SECRET_ACCESS_KEY_KEY];
+        //             const region = result3[REGION_KEY];
     
-                    const s3Obj = new UserS3(accessKey, secretKey, region);
-                    let dateTime = new Date();
-                    s3Obj.uploadFile(link, s3Obj.whichBucket, dateTime.toString());
-                });
-            });
-        });
+        //             const s3Obj = new UserS3(accessKey, secretKey, region);
+        //             let dateTime = new Date();
+        //             s3Obj.uploadFile(link, s3Obj.whichBucket, dateTime.toString());
+        //         });
+        //     });
+        // });
     }
 });
 
@@ -58,4 +63,17 @@ export function validateURL(url:string) {
         return false;
     }
     return true;
+}
+
+function uploadToS3Object(accessKeyId:string, secretAccessKey:string, region:string, bucket:string, fileURL:string){
+
+    // Access keys could be undefined if chrome storage returns undefined for a key that doesn't exist
+    if (accessKeyId !== undefined && secretAccessKey !== undefined && region !== undefined && bucket !== undefined && fileURL !== undefined){
+
+        const s3Obj = new UserS3(accessKeyId, secretAccessKey, region);
+        s3Obj.changeBucket(bucket);
+        
+        let dateTime = new Date();
+        s3Obj.uploadFile(fileURL, s3Obj.whichBucket, dateTime.toString());
+    }
 }
