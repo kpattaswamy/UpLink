@@ -162,7 +162,7 @@ export class UserS3 {
         this.s3Client.send(
           new PutObjectCommand({
             Bucket: bucketName,
-            Key: "temporary_file_" + uniqueTime,
+            Key: "UpLink_file_" + uniqueTime,
             Body: response.data,
           })
         );
@@ -176,7 +176,7 @@ export class UserS3 {
       this.s3Client.send(
         new PutObjectCommand({
           Bucket: bucketName,
-          Key: "temporary_file_" + uniqueTime,
+          Key: "UpLink_file_" + uniqueTime,
           Body: blob,
         })
       );
