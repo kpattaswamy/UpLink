@@ -56,9 +56,10 @@ export class UserMetaStorage {
             BUCKET_KEY,
             URL_KEY
         ], function(result) {
-            let urlArray = result[URL_KEY];
-            console.log(urlArray);
-            onGetStorageKeyValue(result[ACCESS_KEY_ID_KEY], result[SECRET_ACCESS_KEY_KEY], result[REGION_KEY], result[BUCKET_KEY], urlArray[urlArray.length-1])
+            const urlArray = result[URL_KEY];
+            const link = urlArray[urlArray.length - 1] ?? "";
+
+            onGetStorageKeyValue(result[ACCESS_KEY_ID_KEY], result[SECRET_ACCESS_KEY_KEY], result[REGION_KEY], result[BUCKET_KEY], link)
         });
     }
 }

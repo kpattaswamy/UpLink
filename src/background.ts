@@ -3,10 +3,6 @@ import { URLStorage } from "./storage/store_url_array";
 import { UserS3 } from './aws_s3_connect';
 import { UserMetaStorage } from "./storage/store_user_metadata";
 
-const ACCESS_KEY_ID_KEY = 'publicKey';
-const SECRET_ACCESS_KEY_KEY = 'privateKey';
-const REGION_KEY = 'region';
-const BUCKET_KEY = 'bucket';
 
 //Creates a Context Menu right click option for saving pdf links
 chrome.contextMenus.removeAll(function() {
@@ -22,30 +18,27 @@ chrome.contextMenus.removeAll(function() {
     });
 });
 
+//Listener for right click, validates string as URL then sends to S3
 chrome.contextMenus.onClicked.addListener(function(info){
     let link:string = info.linkUrl as string;
 
     if(validateURL(link)){
-        URLStorage.putURL(link);
-
-        UserMetaStorage.sendToS3Object(uploadToS3Object);
-
-
-        // chrome.storage.session.get([ACCESS_KEY_ID_KEY], function(result1) {
-        //     chrome.storage.session.get([SECRET_ACCESS_KEY_KEY], function(result2) {
-        //         chrome.storage.session.get([REGION_KEY], function(result3) {
-        //             const accessKey = result1[ACCESS_KEY_ID_KEY];
-        //             const secretKey = result2[SECRET_ACCESS_KEY_KEY];
-        //             const region = result3[REGION_KEY];
-    
-        //             const s3Obj = new UserS3(accessKey, secretKey, region);
-        //             let dateTime = new Date();
-        //             s3Obj.uploadFile(link, s3Obj.whichBucket, dateTime.toString());
-        //         });
-        //     });
-        // });
+        sendFileWrapper(link);
     }
 });
+
+const sleep = (ms:any) => new Promise(resolve => setTimeout(resolve, ms));
+
+//Async functions to allow for subsequent calls
+async function putURLWrapper(link:string) {
+    await URLStorage.putURL(link);
+}
+
+async function sendFileWrapper(link:string) {
+    await putURLWrapper(link);
+    await sleep(5000);
+    UserMetaStorage.sendToS3Object(uploadToS3Object);
+}
 
 //Function that checks whether URL string points to a valid pdf URL
 export function validateURL(url:string) {
@@ -74,6 +67,6 @@ function uploadToS3Object(accessKeyId:string, secretAccessKey:string, region:str
         s3Obj.changeBucket(bucket);
         
         let dateTime = new Date();
-        s3Obj.uploadFile(fileURL, s3Obj.whichBucket, dateTime.toString());
+        s3Obj.uploadFileFromFetch(fileURL, s3Obj.whichBucket, dateTime.toString());
     }
 }

@@ -168,4 +168,18 @@ export class UserS3 {
         );
       });
   };
+
+  uploadFileFromFetch = (url:string, bucketName:string, uniqueTime:string) => {
+    fetch(url, {method: 'GET',})
+    .then(res => res.blob())
+    .then(blob => {
+      this.s3Client.send(
+        new PutObjectCommand({
+          Bucket: bucketName,
+          Key: "temporary_file_" + uniqueTime,
+          Body: blob,
+        })
+      );
+    });
+  }
 }
