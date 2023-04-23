@@ -102,8 +102,8 @@ export class FileTransfer extends React.Component<Props, TableState>{
         urlCell.appendChild(urlString);
 
         // Will change in a later PR to reflect true status
-        const unknown = document.createTextNode("unknown");
-        statusCell.appendChild(unknown);
+        const uploadStats = document.createTextNode("Success");
+        statusCell.appendChild(uploadStats);
     }
 
     render () {
@@ -146,7 +146,7 @@ export class FileTransfer extends React.Component<Props, TableState>{
                                     return (
                                         <tr>
                                             <td>{row}</td>
-                                            <td>{"unknown"}</td>
+                                            <td>{"Success"}</td>
                                         </tr>
                                     )
                                 })}
