@@ -1,5 +1,8 @@
 import React from "react";
 import { URLStorage } from "./storage/store_url_array";
+import { UserS3 } from './aws_s3_connect';
+import { UserMetaStorage } from "./storage/store_user_metadata";
+
 
 //Creates a Context Menu right click option for saving pdf links
 chrome.contextMenus.removeAll(function() {
@@ -15,14 +18,27 @@ chrome.contextMenus.removeAll(function() {
     });
 });
 
+//Listener for right click, validates string as URL then sends to S3
 chrome.contextMenus.onClicked.addListener(function(info){
     let link:string = info.linkUrl as string;
 
-    //Updates the URL Array stored in memory with the new link if link points to valid file
-    if(validateURL(link)) {
-        URLStorage.putURL(link);
+    if(validateURL(link)){
+        sendFileWrapper(link);
     }
 });
+
+const sleep = (ms:any) => new Promise(resolve => setTimeout(resolve, ms));
+
+//Async functions to allow for subsequent calls
+async function putURLWrapper(link:string) {
+    await URLStorage.putURL(link);
+}
+
+async function sendFileWrapper(link:string) {
+    await putURLWrapper(link);
+    await sleep(5000);
+    UserMetaStorage.sendToS3Object(uploadToS3Object);
+}
 
 //Function that checks whether URL string points to a valid pdf URL
 export function validateURL(url:string) {
@@ -40,4 +56,17 @@ export function validateURL(url:string) {
         return false;
     }
     return true;
+}
+
+function uploadToS3Object(accessKeyId:string, secretAccessKey:string, region:string, bucket:string, fileURL:string){
+
+    // Access keys could be undefined if chrome storage returns undefined for a key that doesn't exist
+    if (accessKeyId !== undefined && secretAccessKey !== undefined && region !== undefined && bucket !== undefined && fileURL !== undefined){
+
+        const s3Obj = new UserS3(accessKeyId, secretAccessKey, region);
+        s3Obj.changeBucket(bucket);
+        
+        let dateTime = new Date();
+        s3Obj.uploadFileFromFetch(fileURL, s3Obj.whichBucket, dateTime.toString());
+    }
 }
